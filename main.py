@@ -1,3 +1,4 @@
+from enum import Enum
 from fastapi import FastAPI
 from fastapi_mcp import FastApiMCP
 import httpx
@@ -47,6 +48,20 @@ async def post_to_eagle_api(endpoint: str, payload: dict):
         }
 
 
+# Types
+
+
+class FolderColor(str, Enum):
+    red = "red"
+    orange = "orange"
+    green = "green"
+    yellow = "yellow"
+    aqua = "aqua"
+    blue = "blue"
+    purple = "purple"
+    pink = "pink"
+
+
 # Application
 
 
@@ -92,7 +107,7 @@ async def rename_folder(id: str, name: str):
     description="Update the specified folder.",
 )
 async def update_folder(
-    id: str, name: str = None, description: str = None, color: str = None
+    id: str, name: str = None, description: str = None, color: FolderColor = None
 ):
     payload = {"folderId": id}
     if name is not None:
@@ -100,7 +115,7 @@ async def update_folder(
     if description is not None:
         payload["newDescription"] = description
     if color is not None:
-        payload["newColor"] = color
+        payload["newColor"] = color.value
     return await post_to_eagle_api("/api/folder/update", payload)
 
 
