@@ -60,6 +60,20 @@ async def get_application_info():
     return await fetch_from_eagle_api("/api/application/info")
 
 
+# Folder
+
+
+@app.post(
+    "/api/folder/create",
+    operation_id="create_folder",
+    tags=["Folder"],
+    description="Create a folder. The created folder will be put at the bottom of the folder list of the current library.",
+)
+async def create_folder(folderName: str, parentId: str = None):
+    payload = {"folderName": folderName, "parent": parentId}
+    return await post_to_eagle_api("/api/folder/create", payload)
+
+
 @app.get("/api/folder/list", operation_id="get_folder_list", tags=["Folder"])
 async def get_folder_list():
     return await fetch_from_eagle_api("/api/folder/list")
@@ -70,12 +84,6 @@ async def get_folder_list():
 )
 async def get_folder_list_recent():
     return await fetch_from_eagle_api("/api/folder/listRecent")
-
-
-@app.post("/api/folder/create", operation_id="create_folder", tags=["Folder"])
-async def create_folder(name: str, parentId: str = None, description: str = None):
-    payload = {"name": name, "parentId": parentId, "description": description}
-    return await post_to_eagle_api("/api/folder/create", payload)
 
 
 @app.post("/api/folder/rename", operation_id="rename_folder", tags=["Folder"])
