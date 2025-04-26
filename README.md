@@ -8,13 +8,18 @@
 
 ## Prerequisites
 
-```
+Install the required dependencies:
+
+```bash
 uv sync
 ```
 
 ## Usage
 
-```
+1. Launch the [Eagle](https://eagle.cool/) app.
+2. Launch this MCP server by running the following command:
+
+```bash
 uv run main.py
 ```
 
