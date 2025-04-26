@@ -1,10 +1,15 @@
-# eagle-mcp-server
+# Eagle MCP Server
+
+...
+
+> [!NOTE]
+> API docs: http://localhost:8000/docs
 
 ## Requirements
 
 - [uv](https://docs.astral.sh/uv/)
 
-## Installation
+## Prerequisites
 
 ```
 uv sync
