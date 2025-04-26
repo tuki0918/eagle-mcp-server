@@ -15,40 +15,32 @@ async def connect():
     return {"message": "Connected!"}
 
 
+async def fetch_from_eagle_api(endpoint: str):
+    url = f"{EAGLE_API_BASE_URL}{endpoint}"
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url)
+            response.raise_for_status()
+            return response.json()
+    except httpx.RequestError as exc:
+        return {"status": "error", "message": f"An error occurred: {exc}"}
+    except httpx.HTTPStatusError as exc:
+        return {
+            "status": "error",
+            "message": f"HTTP error occurred: {exc.response.status_code}",
+        }
+
+
 @app.get(
     "/api/application/info", operation_id="get_application_info", tags=["Application"]
 )
 async def get_application_info():
-    url = f"{EAGLE_API_BASE_URL}/api/application/info"
-    try:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(url)
-            response.raise_for_status()
-            return response.json()
-    except httpx.RequestError as exc:
-        return {"status": "error", "message": f"An error occurred: {exc}"}
-    except httpx.HTTPStatusError as exc:
-        return {
-            "status": "error",
-            "message": f"HTTP error occurred: {exc.response.status_code}",
-        }
+    return await fetch_from_eagle_api("/api/application/info")
 
 
 @app.get("/api/folder/list", operation_id="get_folder_list", tags=["Folder"])
 async def get_folder_list():
-    url = f"{EAGLE_API_BASE_URL}/api/folder/list"
-    try:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(url)
-            response.raise_for_status()
-            return response.json()
-    except httpx.RequestError as exc:
-        return {"status": "error", "message": f"An error occurred: {exc}"}
-    except httpx.HTTPStatusError as exc:
-        return {
-            "status": "error",
-            "message": f"HTTP error occurred: {exc.response.status_code}",
-        }
+    return await fetch_from_eagle_api("/api/folder/list")
 
 
 mcp = FastApiMCP(
