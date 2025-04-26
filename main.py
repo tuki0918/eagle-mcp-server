@@ -85,6 +85,25 @@ async def rename_folder(id: str, name: str):
     return await post_to_eagle_api("/api/folder/rename", payload)
 
 
+@app.post(
+    "/api/folder/update",
+    operation_id="update_folder",
+    tags=["Folder"],
+    description="Update the specified folder.",
+)
+async def update_folder(
+    id: str, name: str = None, description: str = None, color: str = None
+):
+    payload = {"folderId": id}
+    if name is not None:
+        payload["newName"] = name
+    if description is not None:
+        payload["newDescription"] = description
+    if color is not None:
+        payload["newColor"] = color
+    return await post_to_eagle_api("/api/folder/update", payload)
+
+
 @app.get("/api/folder/list", operation_id="get_folder_list", tags=["Folder"])
 async def get_folder_list():
     return await fetch_from_eagle_api("/api/folder/list")
@@ -95,20 +114,6 @@ async def get_folder_list():
 )
 async def get_folder_list_recent():
     return await fetch_from_eagle_api("/api/folder/listRecent")
-
-
-@app.post("/api/folder/update", operation_id="update_folder", tags=["Folder"])
-async def update_folder(
-    id: str, name: str = None, description: str = None, parentId: str = None
-):
-    payload = {"id": id}
-    if name is not None:
-        payload["name"] = name
-    if description is not None:
-        payload["description"] = description
-    if parentId is not None:
-        payload["parentId"] = parentId
-    return await post_to_eagle_api("/api/folder/update", payload)
 
 
 @app.post("/api/item/addFromURLs", operation_id="add_items_from_urls", tags=["Item"])
