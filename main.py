@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from fastapi_mcp import FastApiMCP
 
-app = FastAPI()
+app = FastAPI(
+    title="Eagle MCP API",
+)
 
 
-@app.get("/api/connect", operation_id="connect")
+@app.get("/api/connect", operation_id="connect", tags=["MCP"])
 async def connect():
     return {"message": "Connected!"}
 
@@ -13,8 +15,6 @@ mcp = FastApiMCP(
     app,
     name="Eagle MCP",
     description="An MCP server for Eagle",
-    # describe_full_response_schema=True,  # Describe the full response JSON-schema instead of just a response example
-    # describe_all_responses=True,  # Describe all the possible responses instead of just the success (2XX) response
 )
 
 mcp.mount()
