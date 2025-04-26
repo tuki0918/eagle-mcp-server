@@ -1,5 +1,5 @@
-from enum import Enum
-from fastapi import FastAPI
+from typing import Annotated
+from fastapi import FastAPI, Query
 from fastapi_mcp import FastApiMCP
 import httpx
 
@@ -48,20 +48,6 @@ async def post_to_eagle_api(endpoint: str, payload: dict):
         }
 
 
-# Types
-
-
-class FolderColor(str, Enum):
-    red = "red"
-    orange = "orange"
-    green = "green"
-    yellow = "yellow"
-    aqua = "aqua"
-    blue = "blue"
-    purple = "purple"
-    pink = "pink"
-
-
 # Application
 
 
@@ -84,8 +70,11 @@ async def get_application_info():
     tags=["Folder"],
     description="Create a folder. The created folder will be put at the bottom of the folder list of the current library.",
 )
-async def create_folder(folderName: str, parentId: str = None):
-    payload = {"folderName": folderName, "parent": parentId}
+async def create_folder(
+    folderName: Annotated[str, Query(description="The name of the Folder")],
+    parent: Annotated[str, Query(description="ID of the parent folder")],
+):
+    payload = {"folderName": folderName, "parent": parent}
     return await post_to_eagle_api("/api/folder/create", payload)
 
 
@@ -95,7 +84,10 @@ async def create_folder(folderName: str, parentId: str = None):
     tags=["Folder"],
     description="Rename the specified folder.",
 )
-async def rename_folder(folderId: str, newName: str):
+async def rename_folder(
+    folderId: Annotated[str, Query(description="The folder's ID")],
+    newName: Annotated[str, Query(description="The new name of the folder")],
+):
     payload = {"folderId": folderId, "newName": newName}
     return await post_to_eagle_api("/api/folder/rename", payload)
 
@@ -107,10 +99,20 @@ async def rename_folder(folderId: str, newName: str):
     description="Update the specified folder.",
 )
 async def update_folder(
-    folderId: str,
-    newName: str = None,
-    newDescription: str = None,
-    newColor: FolderColor = None,
+    folderId: Annotated[str, Query(description="The folder's ID")],
+    newName: Annotated[
+        str | None, Query(description="The new name of the folder")
+    ] = None,
+    newDescription: Annotated[
+        str | None,
+        Query(description="The new description of the folder"),
+    ] = None,
+    newColor: Annotated[
+        str | None,
+        Query(
+            description='"red","orange","green","yellow","aqua","blue","purple","pink"'
+        ),
+    ] = None,
 ):
     payload = {"folderId": folderId}
     if newName is not None:
