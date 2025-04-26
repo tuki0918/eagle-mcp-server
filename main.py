@@ -3,7 +3,12 @@ from fastapi_mcp import FastApiMCP
 
 app = FastAPI()
 
-mcp = FastApiMCP(app)
+mcp = FastApiMCP(
+    app,
+    name="My API MCP",
+    description="Very cool MCP server",
+)
+
 mcp.mount()
 
 if __name__ == "__main__":
