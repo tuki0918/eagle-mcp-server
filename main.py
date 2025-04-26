@@ -90,6 +90,15 @@ async def update_folder(
     return await post_to_eagle_api("/api/folder/update", payload)
 
 
+@app.post("/api/item/addFromURL", operation_id="add_item_from_url", tags=["Item"])
+async def add_item_from_url(url: str, folderId: str = None, tags: list[str] = None):
+    payload = {"url": url}
+    if folderId is not None:
+        payload["folderId"] = folderId
+    if tags is not None:
+        payload["tags"] = tags
+    return await post_to_eagle_api("/api/item/addFromURL", payload)
+
 mcp = FastApiMCP(
     app,
     name="Eagle MCP",
