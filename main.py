@@ -95,8 +95,8 @@ async def create_folder(folderName: str, parentId: str = None):
     tags=["Folder"],
     description="Rename the specified folder.",
 )
-async def rename_folder(id: str, name: str):
-    payload = {"folderId": id, "newName": name}
+async def rename_folder(folderId: str, newName: str):
+    payload = {"folderId": folderId, "newName": newName}
     return await post_to_eagle_api("/api/folder/rename", payload)
 
 
@@ -107,15 +107,18 @@ async def rename_folder(id: str, name: str):
     description="Update the specified folder.",
 )
 async def update_folder(
-    id: str, name: str = None, description: str = None, color: FolderColor = None
+    folderId: str,
+    newName: str = None,
+    newDescription: str = None,
+    newColor: FolderColor = None,
 ):
-    payload = {"folderId": id}
-    if name is not None:
-        payload["newName"] = name
-    if description is not None:
-        payload["newDescription"] = description
-    if color is not None:
-        payload["newColor"] = color.value
+    payload = {"folderId": folderId}
+    if newName is not None:
+        payload["newName"] = newName
+    if newDescription is not None:
+        payload["newDescription"] = newDescription
+    if newColor is not None:
+        payload["newColor"] = newColor.value
     return await post_to_eagle_api("/api/folder/update", payload)
 
 
