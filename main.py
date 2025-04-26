@@ -43,6 +43,28 @@ async def get_folder_list():
     return await fetch_from_eagle_api("/api/folder/list")
 
 
+@app.post("/api/folder/create", operation_id="create_folder", tags=["Folder"])
+async def create_folder(name: str, parentId: str = None, description: str = None):
+    url = f"{EAGLE_API_BASE_URL}/api/folder/create"
+    payload = {
+        "name": name,
+        "parentId": parentId,
+        "description": description
+    }
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=payload)
+            response.raise_for_status()
+            return response.json()
+    except httpx.RequestError as exc:
+        return {"status": "error", "message": f"An error occurred: {exc}"}
+    except httpx.HTTPStatusError as exc:
+        return {
+            "status": "error",
+            "message": f"HTTP error occurred: {exc.response.status_code}",
+        }
+
+
 mcp = FastApiMCP(
     app,
     name="Eagle MCP",
