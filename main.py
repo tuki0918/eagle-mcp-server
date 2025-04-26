@@ -59,7 +59,9 @@ async def get_folder_list():
     return await fetch_from_eagle_api("/api/folder/list")
 
 
-@app.get("/api/folder/listRecent", operation_id="get_folder_list_recent", tags=["Folder"])
+@app.get(
+    "/api/folder/listRecent", operation_id="get_folder_list_recent", tags=["Folder"]
+)
 async def get_folder_list_recent():
     return await fetch_from_eagle_api("/api/folder/listRecent")
 
@@ -90,6 +92,18 @@ async def update_folder(
     return await post_to_eagle_api("/api/folder/update", payload)
 
 
+@app.post("/api/item/addFromURLs", operation_id="add_items_from_urls", tags=["Item"])
+async def add_items_from_urls(
+    urls: list[str], folderId: str = None, tags: list[str] = None
+):
+    payload = {"urls": urls}
+    if folderId is not None:
+        payload["folderId"] = folderId
+    if tags is not None:
+        payload["tags"] = tags
+    return await post_to_eagle_api("/api/item/addFromURLs", payload)
+
+
 @app.post("/api/item/addFromURL", operation_id="add_item_from_url", tags=["Item"])
 async def add_item_from_url(url: str, folderId: str = None, tags: list[str] = None):
     payload = {"url": url}
@@ -98,6 +112,7 @@ async def add_item_from_url(url: str, folderId: str = None, tags: list[str] = No
     if tags is not None:
         payload["tags"] = tags
     return await post_to_eagle_api("/api/item/addFromURL", payload)
+
 
 mcp = FastApiMCP(
     app,
