@@ -1,6 +1,7 @@
-def main():
-    print("Hello from eagle-mcp-server!")
+from fastapi import FastAPI
+from fastapi_mcp import FastApiMCP
 
+app = FastAPI()
 
-if __name__ == "__main__":
-    main()
+mcp = FastApiMCP(app)
+mcp.mount()
