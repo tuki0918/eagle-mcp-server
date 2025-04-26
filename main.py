@@ -25,8 +25,6 @@ async def get_application_info():
             response = await client.get(url)
             response.raise_for_status()
             return response.json()
-    except httpx.TimeoutException:
-        return {"status": "error", "message": "The request timed out."}
     except httpx.RequestError as exc:
         return {"status": "error", "message": f"An error occurred: {exc}"}
     except httpx.HTTPStatusError as exc:
