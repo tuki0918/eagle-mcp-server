@@ -3,6 +3,10 @@ from fastapi_mcp import FastApiMCP
 
 app = FastAPI()
 
+@app.get("/api/connect", operation_id="connect")
+async def connect():
+    return {"message": "Connected!"}
+
 mcp = FastApiMCP(
     app,
     name="My API MCP",
