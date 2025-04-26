@@ -34,6 +34,23 @@ async def get_application_info():
         }
 
 
+@app.get("/api/folder/list", operation_id="get_folder_list", tags=["Folder"])
+async def get_folder_list():
+    url = f"{EAGLE_API_BASE_URL}/api/folder/list"
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url)
+            response.raise_for_status()
+            return response.json()
+    except httpx.RequestError as exc:
+        return {"status": "error", "message": f"An error occurred: {exc}"}
+    except httpx.HTTPStatusError as exc:
+        return {
+            "status": "error",
+            "message": f"HTTP error occurred: {exc.response.status_code}",
+        }
+
+
 mcp = FastApiMCP(
     app,
     name="Eagle MCP",
