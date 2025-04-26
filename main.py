@@ -2,14 +2,10 @@ from typing import Annotated
 from fastapi import FastAPI, Query
 from fastapi_mcp import FastApiMCP
 import httpx
-from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env file
-load_dotenv()
-
-# Define the base URL for the Eagle API, override with .env if available
-EAGLE_API_BASE_URL = os.getenv("EAGLE_API_BASE_URL", "http://localhost:41595")
+# Define the base URL for the Eagle API
+EAGLE_API_BASE_URL = os.environ.get("EAGLE_API_BASE_URL", "http://localhost:41595")
 
 app = FastAPI(
     title="Eagle MCP API",
@@ -155,7 +151,7 @@ async def get_folder_list_recent():
 
 mcp = FastApiMCP(
     app,
-    name="Eagle MCP",
+    name="Eagle MCP Server",
     description="An MCP server for Eagle",
 )
 
