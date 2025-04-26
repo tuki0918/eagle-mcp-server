@@ -1,5 +1,14 @@
 # eagle-mcp-server
 
+## Requirements
+
+- [uv](https://docs.astral.sh/uv/)
+
+## Installation
+
+```
+uv sync
+```
 
 ## Usage
 
