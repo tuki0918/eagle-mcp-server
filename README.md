@@ -51,8 +51,8 @@ VS Code
 > [!NOTE]
 > API docs: http://localhost:8000/docs
 
-| Operation ID            | _   | API endpoint (v4.0.0)      | tag         |
-|-------------------------|-----|----------------------------|-------------|
+| Operation ID            | TODO | API endpoint (v4.0.0)      | tag         |
+|:------------------------|-----|:----------------------------|:-------------|
 | connect                 | [x] | /api/connect               | MCP         |
 | get_application_info    | [x] | /api/application/info      | Application |
 | create_folder           | [x] | /api/folder/create         | Folder      |
