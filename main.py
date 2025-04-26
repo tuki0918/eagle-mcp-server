@@ -56,7 +56,10 @@ async def post_to_eagle_api(endpoint: str, payload: dict):
     "/api/application/info",
     operation_id="get_application_info",
     tags=["Application"],
-    description="Get detailed information on the Eagle App currently running. In most cases, this could be used to determine whether certain functions are available on the user's device.",
+    description=(
+        "Get detailed information on the Eagle App currently running. In most cases, this could be used to determine whether certain functions are available on the user's device.\n\n"
+        "External API: [https://api.eagle.cool/application/info](https://api.eagle.cool/application/info)"
+    ),
 )
 async def get_application_info():
     return await fetch_from_eagle_api("/api/application/info")
@@ -69,7 +72,10 @@ async def get_application_info():
     "/api/folder/create",
     operation_id="create_folder",
     tags=["Folder"],
-    description="Create a folder. The created folder will be put at the bottom of the folder list of the current library.",
+    description=(
+        "Create a folder. The created folder will be put at the bottom of the folder list of the current library.\n\n"
+        "External API: [https://api.eagle.cool/folder/create](https://api.eagle.cool/folder/create)"
+    ),
 )
 async def create_folder(
     folderName: Annotated[str, Query(description="The name of the Folder")],
@@ -83,7 +89,10 @@ async def create_folder(
     "/api/folder/rename",
     operation_id="rename_folder",
     tags=["Folder"],
-    description="Rename the specified folder.",
+    description=(
+        "Rename the specified folder.\n\n"
+        "External API: [https://api.eagle.cool/folder/rename](https://api.eagle.cool/folder/rename)"
+    ),
 )
 async def rename_folder(
     folderId: Annotated[str, Query(description="The folder's ID")],
@@ -97,7 +106,10 @@ async def rename_folder(
     "/api/folder/update",
     operation_id="update_folder",
     tags=["Folder"],
-    description="Update the specified folder.",
+    description=(
+        "Update the specified folder.\n\n"
+        "External API: [https://api.eagle.cool/folder/update](https://api.eagle.cool/folder/update)"
+    ),
 )
 async def update_folder(
     folderId: Annotated[str, Query(description="The folder's ID")],
@@ -129,7 +141,10 @@ async def update_folder(
     "/api/folder/list",
     operation_id="get_folder_list",
     tags=["Folder"],
-    description="Get the list of folders of the current library.",
+    description=(
+        "Get the list of folders of the current library.\n\n"
+        "External API: [https://api.eagle.cool/folder/list](https://api.eagle.cool/folder/list)"
+    ),
 )
 async def get_folder_list():
     return await fetch_from_eagle_api("/api/folder/list")
@@ -139,7 +154,10 @@ async def get_folder_list():
     "/api/folder/listRecent",
     operation_id="get_folder_list_recent",
     tags=["Folder"],
-    description="Get the list of folders recently used by the user.",
+    description=(
+        "Get the list of folders recently used by the user.\n\n"
+        "External API: [https://api.eagle.cool/folder/list-recent](https://api.eagle.cool/folder/list-recent)"
+    ),
 )
 async def get_folder_list_recent():
     return await fetch_from_eagle_api("/api/folder/listRecent")
