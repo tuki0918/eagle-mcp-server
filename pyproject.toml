@@ -7,4 +7,5 @@ requires-python = ">=3.13"
 dependencies = [
     "fastapi-mcp>=0.3.3",
     "httpx>=0.28.1",
+    "python-dotenv>=1.1.0",
 ]

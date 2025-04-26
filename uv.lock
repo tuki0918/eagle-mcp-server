@@ -83,12 +83,14 @@ source = { virtual = "." }
 dependencies = [
     { name = "fastapi-mcp" },
     { name = "httpx" },
+    { name = "python-dotenv" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "fastapi-mcp", specifier = ">=0.3.3" },
     { name = "httpx", specifier = ">=0.28.1" },
+    { name = "python-dotenv", specifier = ">=1.1.0" },
 ]
 
 [[package]]
