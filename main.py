@@ -122,13 +122,21 @@ async def update_folder(
     return await post_to_eagle_api("/api/folder/update", payload)
 
 
-@app.get("/api/folder/list", operation_id="get_folder_list", tags=["Folder"])
+@app.get(
+    "/api/folder/list",
+    operation_id="get_folder_list",
+    tags=["Folder"],
+    description="Get the list of folders of the current library.",
+)
 async def get_folder_list():
     return await fetch_from_eagle_api("/api/folder/list")
 
 
 @app.get(
-    "/api/folder/listRecent", operation_id="get_folder_list_recent", tags=["Folder"]
+    "/api/folder/listRecent",
+    operation_id="get_folder_list_recent",
+    tags=["Folder"],
+    description="Get the list of folders recently used by the user.",
 )
 async def get_folder_list_recent():
     return await fetch_from_eagle_api("/api/folder/listRecent")
