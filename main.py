@@ -47,8 +47,14 @@ async def post_to_eagle_api(endpoint: str, payload: dict):
         }
 
 
+# Application
+
+
 @app.get(
-    "/api/application/info", operation_id="get_application_info", tags=["Application"]
+    "/api/application/info",
+    operation_id="get_application_info",
+    tags=["Application"],
+    description="Get detailed information on the Eagle App currently running. In most cases, this could be used to determine whether certain functions are available on the user's device.",
 )
 async def get_application_info():
     return await fetch_from_eagle_api("/api/application/info")
