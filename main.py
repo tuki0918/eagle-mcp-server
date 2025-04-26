@@ -31,6 +31,22 @@ async def fetch_from_eagle_api(endpoint: str):
         }
 
 
+async def post_to_eagle_api(endpoint: str, payload: dict):
+    url = f"{EAGLE_API_BASE_URL}{endpoint}"
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=payload)
+            response.raise_for_status()
+            return response.json()
+    except httpx.RequestError as exc:
+        return {"status": "error", "message": f"An error occurred: {exc}"}
+    except httpx.HTTPStatusError as exc:
+        return {
+            "status": "error",
+            "message": f"HTTP error occurred: {exc.response.status_code}",
+        }
+
+
 @app.get(
     "/api/application/info", operation_id="get_application_info", tags=["Application"]
 )
@@ -45,50 +61,20 @@ async def get_folder_list():
 
 @app.post("/api/folder/create", operation_id="create_folder", tags=["Folder"])
 async def create_folder(name: str, parentId: str = None, description: str = None):
-    url = f"{EAGLE_API_BASE_URL}/api/folder/create"
-    payload = {
-        "name": name,
-        "parentId": parentId,
-        "description": description
-    }
-    try:
-        async with httpx.AsyncClient() as client:
-            response = await client.post(url, json=payload)
-            response.raise_for_status()
-            return response.json()
-    except httpx.RequestError as exc:
-        return {"status": "error", "message": f"An error occurred: {exc}"}
-    except httpx.HTTPStatusError as exc:
-        return {
-            "status": "error",
-            "message": f"HTTP error occurred: {exc.response.status_code}",
-        }
+    payload = {"name": name, "parentId": parentId, "description": description}
+    return await post_to_eagle_api("/api/folder/create", payload)
 
 
 @app.post("/api/folder/rename", operation_id="rename_folder", tags=["Folder"])
 async def rename_folder(id: str, name: str):
-    url = f"{EAGLE_API_BASE_URL}/api/folder/rename"
-    payload = {
-        "id": id,
-        "name": name
-    }
-    try:
-        async with httpx.AsyncClient() as client:
-            response = await client.post(url, json=payload)
-            response.raise_for_status()
-            return response.json()
-    except httpx.RequestError as exc:
-        return {"status": "error", "message": f"An error occurred: {exc}"}
-    except httpx.HTTPStatusError as exc:
-        return {
-            "status": "error",
-            "message": f"HTTP error occurred: {exc.response.status_code}",
-        }
+    payload = {"id": id, "name": name}
+    return await post_to_eagle_api("/api/folder/rename", payload)
 
 
 @app.post("/api/folder/update", operation_id="update_folder", tags=["Folder"])
-async def update_folder(id: str, name: str = None, description: str = None, parentId: str = None):
-    url = f"{EAGLE_API_BASE_URL}/api/folder/update"
+async def update_folder(
+    id: str, name: str = None, description: str = None, parentId: str = None
+):
     payload = {"id": id}
     if name is not None:
         payload["name"] = name
@@ -96,18 +82,7 @@ async def update_folder(id: str, name: str = None, description: str = None, pare
         payload["description"] = description
     if parentId is not None:
         payload["parentId"] = parentId
-    try:
-        async with httpx.AsyncClient() as client:
-            response = await client.post(url, json=payload)
-            response.raise_for_status()
-            return response.json()
-    except httpx.RequestError as exc:
-        return {"status": "error", "message": f"An error occurred: {exc}"}
-    except httpx.HTTPStatusError as exc:
-        return {
-            "status": "error",
-            "message": f"HTTP error occurred: {exc.response.status_code}",
-        }
+    return await post_to_eagle_api("/api/folder/update", payload)
 
 
 mcp = FastApiMCP(
