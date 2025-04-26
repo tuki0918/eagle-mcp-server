@@ -86,6 +86,30 @@ async def rename_folder(id: str, name: str):
         }
 
 
+@app.post("/api/folder/update", operation_id="update_folder", tags=["Folder"])
+async def update_folder(id: str, name: str = None, description: str = None, parentId: str = None):
+    url = f"{EAGLE_API_BASE_URL}/api/folder/update"
+    payload = {"id": id}
+    if name is not None:
+        payload["name"] = name
+    if description is not None:
+        payload["description"] = description
+    if parentId is not None:
+        payload["parentId"] = parentId
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=payload)
+            response.raise_for_status()
+            return response.json()
+    except httpx.RequestError as exc:
+        return {"status": "error", "message": f"An error occurred: {exc}"}
+    except httpx.HTTPStatusError as exc:
+        return {
+            "status": "error",
+            "message": f"HTTP error occurred: {exc.response.status_code}",
+        }
+
+
 mcp = FastApiMCP(
     app,
     name="Eagle MCP",
