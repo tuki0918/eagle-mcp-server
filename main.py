@@ -59,6 +59,11 @@ async def get_folder_list():
     return await fetch_from_eagle_api("/api/folder/list")
 
 
+@app.get("/api/folder/listRecent", operation_id="get_folder_list_recent", tags=["Folder"])
+async def get_folder_list_recent():
+    return await fetch_from_eagle_api("/api/folder/listRecent")
+
+
 @app.post("/api/folder/create", operation_id="create_folder", tags=["Folder"])
 async def create_folder(name: str, parentId: str = None, description: str = None):
     payload = {"name": name, "parentId": parentId, "description": description}
