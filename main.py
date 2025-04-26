@@ -74,6 +74,17 @@ async def create_folder(folderName: str, parentId: str = None):
     return await post_to_eagle_api("/api/folder/create", payload)
 
 
+@app.post(
+    "/api/folder/rename",
+    operation_id="rename_folder",
+    tags=["Folder"],
+    description="Rename the specified folder.",
+)
+async def rename_folder(id: str, name: str):
+    payload = {"folderId": id, "newName": name}
+    return await post_to_eagle_api("/api/folder/rename", payload)
+
+
 @app.get("/api/folder/list", operation_id="get_folder_list", tags=["Folder"])
 async def get_folder_list():
     return await fetch_from_eagle_api("/api/folder/list")
@@ -84,12 +95,6 @@ async def get_folder_list():
 )
 async def get_folder_list_recent():
     return await fetch_from_eagle_api("/api/folder/listRecent")
-
-
-@app.post("/api/folder/rename", operation_id="rename_folder", tags=["Folder"])
-async def rename_folder(id: str, name: str):
-    payload = {"id": id, "name": name}
-    return await post_to_eagle_api("/api/folder/rename", payload)
 
 
 @app.post("/api/folder/update", operation_id="update_folder", tags=["Folder"])
