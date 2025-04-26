@@ -48,11 +48,8 @@ VS Code
 
 ## Tools
 
-> [!NOTE]
-> API docs: http://localhost:8000/docs
-
 | TODO | Operation ID            | API endpoint (v4.0.0)      | tag         |
-|------|:------------------------|:---------------------------|:------------|
+|:----:|:------------------------|:---------------------------|:------------|
 | [x]  | connect                 | /api/connect               | MCP         |
 | [x]  | get_application_info    | /api/application/info      | Application |
 | [x]  | create_folder           | /api/folder/create         | Folder      |
@@ -76,3 +73,9 @@ VS Code
 | [ ]  | get_library_history     | /api/library/history       | Library     |
 | [ ]  | switch_library          | /api/library/switch        | Library     |
 | [ ]  | get_library_icon        | /api/library/icon          | Library     |
+
+> [!NOTE]
+> MCP Server API docs: http://localhost:8000/docs
+
+> [!NOTE]
+> Official Eagle API docs: https://api.eagle.cool/
