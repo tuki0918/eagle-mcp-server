@@ -237,6 +237,71 @@ async def add_item_from_url(
     return await post_to_eagle_api("/api/item/addFromURL", payload)
 
 
+@app.get(
+    "/api/item/list",
+    operation_id="get_item_list",
+    tags=["Item"],
+    description=(
+        "Get items that match the filter condition.\n\n"
+        "External API: [https://api.eagle.cool/item/list](https://api.eagle.cool/item/list)"
+    ),
+)
+async def get_item_list(
+    limit: Annotated[
+        int | None,
+        Query(
+            description="The number of items to be displayed. the default number is `200`",
+            ge=1,
+        ),
+    ] = 200,
+    offset: Annotated[
+        int | None,
+        Query(
+            description="Offset a collection of results from the api. Start with `0`",
+            ge=0,
+        ),
+    ] = 0,
+    orderBy: Annotated[
+        str | None,
+        Query(
+            description="The sorting order. `CREATEDATE`, `FILESIZE`, `NAME`, `RESOLUTION`, add a minus sign for descending order: `-FILESIZE`"
+        ),
+    ] = None,
+    keyword: Annotated[str | None, Query(description="Filter by the keyword")] = None,
+    ext: Annotated[
+        str | None,
+        Query(description="Filter by the extension type, e.g.: `jpg`, `png`"),
+    ] = None,
+    tags: Annotated[
+        str | None,
+        Query(
+            description="Filter by tags. Use `,` to divide different tags. E.g.: `Design`, `Poster`"
+        ),
+    ] = None,
+    folders: Annotated[
+        str | None,
+        Query(
+            description="Filter by Folders. Use `,` to divide folder IDs. E.g.: `KAY6NTU6UYI5Q,KBJ8Z60O88VMG`"
+        ),
+    ] = None,
+):
+    params = {
+        "limit": limit,
+        "offset": offset,
+    }
+    if orderBy is not None:
+        params["orderBy"] = orderBy
+    if keyword is not None:
+        params["keyword"] = keyword
+    if ext is not None:
+        params["ext"] = ext
+    if tags is not None:
+        params["tags"] = tags
+    if folders is not None:
+        params["folders"] = folders
+    return await fetch_from_eagle_api("/api/item/list", params=params)
+
+
 mcp = FastApiMCP(
     app,
     name="Eagle MCP Server",
