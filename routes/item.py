@@ -32,7 +32,7 @@ async def add_items_from_urls(data: AddItemsFromURLsRequest):
     return await post_to_eagle_api("/api/item/addFromURLs", payload)
 
 
-@router.get(
+@router.post(
     "/api/item/list",
     operation_id="get_item_list",
     description=(
@@ -41,5 +41,5 @@ async def add_items_from_urls(data: AddItemsFromURLsRequest):
     ),
 )
 async def get_item_list(data: GetItemListRequest):
-    params = data.model_dump(exclude_none=True)
-    return await fetch_from_eagle_api("/api/item/list", params=params)
+    payload = data.model_dump(exclude_none=True)
+    return await fetch_from_eagle_api("/api/item/list", payload)
