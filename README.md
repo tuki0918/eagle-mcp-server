@@ -62,14 +62,14 @@ VS Code
 | [x]  | `update_folder`          | /api/folder/update         | Folder      |
 | [x]  | `get_folder_list`        | /api/folder/list           | Folder      |
 | [x]  | `get_folder_list_recent` | /api/folder/listRecent     | Folder      |
-| [ ]  | `add_item_from_url`      | /api/item/addFromURL       | Item        |
+| [x]  | `add_item_from_url`      | /api/item/addFromURL       | Item        |
 | [ ]  | `add_items_from_urls`    | /api/item/addFromURLs      | Item        |
 | [ ]  | `add_item_from_path`     | /api/item/addFromPath      | Item        |
 | [ ]  | `add_items_from_paths`   | /api/item/addFromPaths     | Item        |
 | [ ]  | `add_bookmark`           | /api/item/addBookmark      | Item        |
 | [ ]  | `get_item_info`          | /api/item/info             | Item        |
 | [ ]  | `get_item_thumbnail`     | /api/item/thumbnail        | Item        |
-| [ ]  | `get_item_list`          | /api/item/list             | Item        |
+| [x]  | `get_item_list`          | /api/item/list             | Item        |
 | [ ]  | `move_item_to_trash`     | /api/item/moveToTrash      | Item        |
 | [ ]  | `refresh_item_palette`   | /api/item/refreshPalette   | Item        |
 | [ ]  | `refresh_item_thumbnail` | /api/item/refreshThumbnail | Item        |
