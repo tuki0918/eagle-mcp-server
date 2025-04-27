@@ -21,6 +21,8 @@ uv sync
 
 ```bash
 uv run main.py
+# To use a different endpoint:
+# EAGLE_API_BASE_URL=http://localhost:12345 uv run main.py
 ```
 
 
