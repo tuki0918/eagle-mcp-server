@@ -192,14 +192,16 @@ async def add_item_from_url(
         str | None, Query(description="The Address of the source of the image")
     ] = None,
     tags: Annotated[list[str] | None, Query(description="Tags for the image.")] = None,
-    star: Annotated[int | None, Query(description="The rating for the image.")] = None,
+    star: Annotated[
+        int | None, Query(description="The rating for the image.", ge=0, le=5)
+    ] = None,
     annotation: Annotated[
         str | None, Query(description="The annotation for the image.")
     ] = None,
     modificationTime: Annotated[
         int | None,
         Query(
-            description="The creation date of the image. The parameter can be used to alter the image's sorting order in Eagle."
+            description="The creation date (ms) of the image. The parameter can be used to alter the image's sorting order in Eagle."
         ),
     ] = None,
     folderId: Annotated[
