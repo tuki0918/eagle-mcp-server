@@ -1,5 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Annotated
 
 
 class ConnectResponse(BaseModel):
-    message: str
+    message: Annotated[str, Field(...)]
