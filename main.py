@@ -239,6 +239,35 @@ async def add_item_from_url(
     return await post_to_eagle_api("/api/item/addFromURL", payload)
 
 
+@app.post(
+    "/api/item/addFromURLs",
+    operation_id="add_items_from_urls",
+    tags=["Item"],
+    description=(
+        "Add multiple images from URLs to Eagle App.\n\n"
+        "External API: [https://api.eagle.cool/item/add-from-urls](https://api.eagle.cool/item/add-from-urls)"
+    ),
+)
+async def add_items_from_urls(
+    items: Annotated[
+        list[dict],
+        Query(
+            description="The array object made up of multiple items (See the description below)"
+        ),
+    ],
+    folderId: Annotated[
+        str | None,
+        Query(
+            description="If the parameter is defined, images will be added to the corresponding folder."
+        ),
+    ] = None,
+):
+    payload = {"items": items}
+    if folderId is not None:
+        payload["folderId"] = folderId
+    return await post_to_eagle_api("/api/item/addFromURLs", payload)
+
+
 @app.get(
     "/api/item/list",
     operation_id="get_item_list",
