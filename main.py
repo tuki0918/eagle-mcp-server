@@ -1,6 +1,7 @@
 from typing import Annotated
 from fastapi import FastAPI, Query
 from fastapi_mcp import FastApiMCP
+from schemas import ConnectResponse
 import httpx
 import os
 
@@ -12,9 +13,11 @@ app = FastAPI(
 )
 
 
-@app.get("/api/connect", operation_id="connect", tags=["MCP"])
-async def connect():
-    return {"message": "Connected!"}
+@app.get(
+    "/api/connect", operation_id="connect", tags=["MCP"], response_model=ConnectResponse
+)
+async def connect() -> ConnectResponse:
+    return ConnectResponse(message="Connected!")
 
 
 async def fetch_from_eagle_api(endpoint: str):
