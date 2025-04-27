@@ -1,7 +1,15 @@
 from typing import Annotated
 from fastapi import FastAPI, Query
 from fastapi_mcp import FastApiMCP
-from schemas import ConnectResponse
+from schemas import (
+    ConnectResponse,
+    CreateFolderRequest,
+    RenameFolderRequest,
+    UpdateFolderRequest,
+    AddItemFromURLRequest,
+    AddItemsFromURLsRequest,
+    GetItemListRequest,
+)
 import httpx
 import os
 
@@ -83,11 +91,8 @@ async def get_application_info():
         "External API: [https://api.eagle.cool/folder/create](https://api.eagle.cool/folder/create)"
     ),
 )
-async def create_folder(
-    folderName: Annotated[str, Query(description="The name of the Folder")],
-    parent: Annotated[str, Query(description="ID of the parent folder")],
-):
-    payload = {"folderName": folderName, "parent": parent}
+async def create_folder(data: CreateFolderRequest):
+    payload = {"folderName": data.folderName, "parent": data.parent}
     return await post_to_eagle_api("/api/folder/create", payload)
 
 
@@ -100,11 +105,8 @@ async def create_folder(
         "External API: [https://api.eagle.cool/folder/rename](https://api.eagle.cool/folder/rename)"
     ),
 )
-async def rename_folder(
-    folderId: Annotated[str, Query(description="The folder's ID")],
-    newName: Annotated[str, Query(description="The new name of the folder")],
-):
-    payload = {"folderId": folderId, "newName": newName}
+async def rename_folder(data: RenameFolderRequest):
+    payload = {"folderId": data.folderId, "newName": data.newName}
     return await post_to_eagle_api("/api/folder/rename", payload)
 
 
@@ -117,29 +119,14 @@ async def rename_folder(
         "External API: [https://api.eagle.cool/folder/update](https://api.eagle.cool/folder/update)"
     ),
 )
-async def update_folder(
-    folderId: Annotated[str, Query(description="The folder's ID")],
-    newName: Annotated[
-        str | None, Query(description="The new name of the folder")
-    ] = None,
-    newDescription: Annotated[
-        str | None,
-        Query(description="The new description of the folder"),
-    ] = None,
-    newColor: Annotated[
-        str | None,
-        Query(
-            description='"red","orange","green","yellow","aqua","blue","purple","pink"'
-        ),
-    ] = None,
-):
-    payload = {"folderId": folderId}
-    if newName is not None:
-        payload["newName"] = newName
-    if newDescription is not None:
-        payload["newDescription"] = newDescription
-    if newColor is not None:
-        payload["newColor"] = newColor.value
+async def update_folder(data: UpdateFolderRequest):
+    payload = {"folderId": data.folderId}
+    if data.newName is not None:
+        payload["newName"] = data.newName
+    if data.newDescription is not None:
+        payload["newDescription"] = data.newDescription
+    if data.newColor is not None:
+        payload["newColor"] = data.newColor.value
     return await post_to_eagle_api("/api/folder/update", payload)
 
 
@@ -181,64 +168,25 @@ async def get_folder_list_recent():
         "External API: [https://api.eagle.cool/item/add-from-url](https://api.eagle.cool/item/add-from-url)"
     ),
 )
-async def add_item_from_url(
-    url: Annotated[
-        str,
-        Query(
-            description="Required, the URL of the image to be added. Supports http, https, base64"
-        ),
-    ],
-    name: Annotated[
-        str, Query(description="Required, the name of the image to be added.")
-    ],
-    website: Annotated[
-        str | None, Query(description="The Address of the source of the image")
-    ] = None,
-    tags: Annotated[list[str] | None, Query(description="Tags for the image.")] = None,
-    star: Annotated[
-        int | None, Query(description="The rating for the image.", ge=0, le=5)
-    ] = None,
-    annotation: Annotated[
-        str | None, Query(description="The annotation for the image.")
-    ] = None,
-    modificationTime: Annotated[
-        int | None,
-        Query(
-            description="The creation date (ms) of the image. The parameter can be used to alter the image's sorting order in Eagle."
-        ),
-    ] = None,
-    folderId: Annotated[
-        str | None,
-        Query(
-            description="If this parameter is defined, the image will be added to the corresponding folder."
-        ),
-    ] = None,
-    # TODO: fastapi err
-    # headers: Annotated[
-    #     dict[str, str] | None,
-    #     Query(
-    #         description="Optional, customize the HTTP headers properties, this could be used to circumvent the security of certain websites."
-    #     ),
-    # ] = None,
-):
+async def add_item_from_url(data: AddItemFromURLRequest):
     payload = {
-        "url": url,
-        "name": name,
+        "url": data.url,
+        "name": data.name,
     }
-    if website is not None:
-        payload["website"] = website
-    if tags is not None:
-        payload["tags"] = tags
-    if star is not None:
-        payload["star"] = star
-    if annotation is not None:
-        payload["annotation"] = annotation
-    if modificationTime is not None:
-        payload["modificationTime"] = modificationTime
-    if folderId is not None:
-        payload["folderId"] = folderId
-    # if headers is not None:
-    #     payload["headers"] = headers
+    if data.website is not None:
+        payload["website"] = data.website
+    if data.tags is not None:
+        payload["tags"] = data.tags
+    if data.star is not None:
+        payload["star"] = data.star
+    if data.annotation is not None:
+        payload["annotation"] = data.annotation
+    if data.modificationTime is not None:
+        payload["modificationTime"] = data.modificationTime
+    if data.folderId is not None:
+        payload["folderId"] = data.folderId
+    if data.headers is not None:
+        payload["headers"] = data.headers
     return await post_to_eagle_api("/api/item/addFromURL", payload)
 
 
@@ -251,25 +199,11 @@ async def add_item_from_url(
         "External API: [https://api.eagle.cool/item/add-from-urls](https://api.eagle.cool/item/add-from-urls)"
     ),
 )
-async def add_items_from_urls(
-    # TODO: fastapi err
-    # items: Annotated[
-    #     list[dict],
-    #     Query(
-    #         description="The array object made up of multiple items (See the description below)"
-    #     ),
-    # ],
-    folderId: Annotated[
-        str | None,
-        Query(
-            description="If the parameter is defined, images will be added to the corresponding folder."
-        ),
-    ] = None,
-):
-    # payload = {"items": items}
-    payload = {}
-    if folderId is not None:
-        payload["folderId"] = folderId
+async def add_items_from_urls(data: AddItemsFromURLsRequest):
+    items = [item.model_dump() for item in data.items]
+    payload = {"items": items}
+    if data.folderId is not None:
+        payload["folderId"] = data.folderId
     return await post_to_eagle_api("/api/item/addFromURLs", payload)
 
 
@@ -282,59 +216,21 @@ async def add_items_from_urls(
         "External API: [https://api.eagle.cool/item/list](https://api.eagle.cool/item/list)"
     ),
 )
-async def get_item_list(
-    limit: Annotated[
-        int | None,
-        Query(
-            description="The number of items to be displayed. the default number is `200`",
-            ge=1,
-        ),
-    ] = 200,
-    offset: Annotated[
-        int | None,
-        Query(
-            description="Offset a collection of results from the api. Start with `0`",
-            ge=0,
-        ),
-    ] = 0,
-    orderBy: Annotated[
-        str | None,
-        Query(
-            description="The sorting order. `CREATEDATE`, `FILESIZE`, `NAME`, `RESOLUTION`, add a minus sign for descending order: `-FILESIZE`"
-        ),
-    ] = None,
-    keyword: Annotated[str | None, Query(description="Filter by the keyword")] = None,
-    ext: Annotated[
-        str | None,
-        Query(description="Filter by the extension type, e.g.: `jpg`, `png`"),
-    ] = None,
-    tags: Annotated[
-        str | None,
-        Query(
-            description="Filter by tags. Use `,` to divide different tags. E.g.: `Design`, `Poster`"
-        ),
-    ] = None,
-    folders: Annotated[
-        str | None,
-        Query(
-            description="Filter by Folders. Use `,` to divide folder IDs. E.g.: `KAY6NTU6UYI5Q,KBJ8Z60O88VMG`"
-        ),
-    ] = None,
-):
+async def get_item_list(data: GetItemListRequest):
     params = {
-        "limit": limit,
-        "offset": offset,
+        "limit": data.limit,
+        "offset": data.offset,
     }
-    if orderBy is not None:
-        params["orderBy"] = orderBy
-    if keyword is not None:
-        params["keyword"] = keyword
-    if ext is not None:
-        params["ext"] = ext
-    if tags is not None:
-        params["tags"] = tags
-    if folders is not None:
-        params["folders"] = folders
+    if data.orderBy is not None:
+        params["orderBy"] = data.orderBy
+    if data.keyword is not None:
+        params["keyword"] = data.keyword
+    if data.ext is not None:
+        params["ext"] = data.ext
+    if data.tags is not None:
+        params["tags"] = data.tags
+    if data.folders is not None:
+        params["folders"] = data.folders
     return await fetch_from_eagle_api("/api/item/list", params=params)
 
 
