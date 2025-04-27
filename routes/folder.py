@@ -14,7 +14,9 @@ router = APIRouter(tags=["Folder"])
     ),
 )
 async def create_folder(data: CreateFolderRequest):
-    payload = {"folderName": data.folderName, "parent": data.parent}
+    payload = {"folderName": data.folderName}
+    if data.parent is not None:
+        payload["parent"] = data.parent
     return await post_to_eagle_api("/api/folder/create", payload)
 
 
