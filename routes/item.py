@@ -44,7 +44,7 @@ async def add_item_from_url(data: AddItemFromURLRequest):
     ),
 )
 async def add_items_from_urls(data: AddItemsFromURLsRequest):
-    items = [item.model_dump() for item in data.items]
+    items = [item.model_dump(exclude_none=True) for item in data.items]
     payload = {"items": items}
     if data.folderId is not None:
         payload["folderId"] = data.folderId
