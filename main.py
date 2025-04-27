@@ -20,11 +20,11 @@ async def connect() -> ConnectResponse:
     return ConnectResponse(message="Connected!")
 
 
-async def fetch_from_eagle_api(endpoint: str):
+async def fetch_from_eagle_api(endpoint: str, params: dict = None):
     url = f"{EAGLE_API_BASE_URL}{endpoint}"
     try:
         async with httpx.AsyncClient() as client:
-            response = await client.get(url)
+            response = await client.get(url, params=params)
             response.raise_for_status()
             return response.json()
     except httpx.RequestError as exc:
