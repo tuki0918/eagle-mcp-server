@@ -8,7 +8,6 @@ router = APIRouter(tags=["Folder"])
 @router.post(
     "/api/folder/create",
     operation_id="create_folder",
-    tags=["Folder"],
     description=(
         "Create a folder. The created folder will be put at the bottom of the folder list of the current library.\n\n"
         "External API: [https://api.eagle.cool/folder/create](https://api.eagle.cool/folder/create)"
@@ -22,7 +21,6 @@ async def create_folder(data: CreateFolderRequest):
 @router.post(
     "/api/folder/rename",
     operation_id="rename_folder",
-    tags=["Folder"],
     description=(
         "Rename the specified folder.\n\n"
         "External API: [https://api.eagle.cool/folder/rename](https://api.eagle.cool/folder/rename)"
@@ -36,7 +34,6 @@ async def rename_folder(data: RenameFolderRequest):
 @router.post(
     "/api/folder/update",
     operation_id="update_folder",
-    tags=["Folder"],
     description=(
         "Update the specified folder.\n\n"
         "External API: [https://api.eagle.cool/folder/update](https://api.eagle.cool/folder/update)"
@@ -56,7 +53,6 @@ async def update_folder(data: UpdateFolderRequest):
 @router.get(
     "/api/folder/list",
     operation_id="get_folder_list",
-    tags=["Folder"],
     description=(
         "Get the list of folders of the current library.\n\n"
         "External API: [https://api.eagle.cool/folder/list](https://api.eagle.cool/folder/list)"
@@ -69,7 +65,6 @@ async def get_folder_list():
 @router.get(
     "/api/folder/listRecent",
     operation_id="get_folder_list_recent",
-    tags=["Folder"],
     description=(
         "Get the list of folders recently used by the user.\n\n"
         "External API: [https://api.eagle.cool/folder/list-recent](https://api.eagle.cool/folder/list-recent)"

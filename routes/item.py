@@ -8,7 +8,6 @@ router = APIRouter(tags=["Item"])
 @router.post(
     "/api/item/addFromURL",
     operation_id="add_item_from_url",
-    tags=["Item"],
     description=(
         "Add an image from an address to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_urls`.\n\n"
         "External API: [https://api.eagle.cool/item/add-from-url](https://api.eagle.cool/item/add-from-url)"
@@ -39,7 +38,6 @@ async def add_item_from_url(data: AddItemFromURLRequest):
 @router.post(
     "/api/item/addFromURLs",
     operation_id="add_items_from_urls",
-    tags=["Item"],
     description=(
         "Add multiple images from URLs to Eagle App.\n\n"
         "External API: [https://api.eagle.cool/item/add-from-urls](https://api.eagle.cool/item/add-from-urls)"
@@ -56,7 +54,6 @@ async def add_items_from_urls(data: AddItemsFromURLsRequest):
 @router.get(
     "/api/item/list",
     operation_id="get_item_list",
-    tags=["Item"],
     description=(
         "Get items that match the filter condition.\n\n"
         "External API: [https://api.eagle.cool/item/list](https://api.eagle.cool/item/list)"
