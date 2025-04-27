@@ -65,7 +65,7 @@ VS Code
 | [x]  | `get_folder_list`        | /api/folder/list           | Folder      |
 | [x]  | `get_folder_list_recent` | /api/folder/listRecent     | Folder      |
 | [x]  | `add_item_from_url`      | /api/item/addFromURL       | Item        |
-| [ ]  | `add_items_from_urls`    | /api/item/addFromURLs      | Item        |
+| [x]  | `add_items_from_urls`    | /api/item/addFromURLs      | Item        |
 | [ ]  | `add_item_from_path`     | /api/item/addFromPath      | Item        |
 | [ ]  | `add_items_from_paths`   | /api/item/addFromPaths     | Item        |
 | [ ]  | `add_bookmark`           | /api/item/addBookmark      | Item        |
