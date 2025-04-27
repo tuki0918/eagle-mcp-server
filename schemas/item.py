@@ -1,0 +1,74 @@
+from pydantic import BaseModel, Field
+from typing import Dict, Optional, List
+
+
+class AddBaseItem(BaseModel):
+    url: str = Field(
+        ...,
+        description="Required, the URL of the image to be added. Supports http, https, base64",
+    )
+    name: str = Field(..., description="Required, the name of the image to be added.")
+    website: Optional[str] = Field(
+        None, description="The Address of the source of the image"
+    )
+    tags: Optional[List[str]] = Field(None, description="Tags for the image.")
+    star: Optional[int] = Field(
+        None, ge=0, le=5, description="The rating for the image."
+    )
+    annotation: Optional[str] = Field(None, description="The annotation for the image.")
+    modificationTime: Optional[int] = Field(
+        None,
+        description="The creation date (ms) of the image. The parameter can be used to alter the image's sorting order in Eagle.",
+    )
+    headers: Optional[Dict[str, str]] = Field(
+        None,
+        description="Optional, customize the HTTP headers properties, this could be used to circumvent the security of certain websites.",
+    )
+
+
+class AddItemFromURLRequest(AddBaseItem):
+    folderId: Optional[str] = Field(
+        None,
+        description="If this parameter is defined, the image will be added to the corresponding folder.",
+    )
+
+
+class AddItemsFromURLsRequest(BaseModel):
+    items: List[AddBaseItem] = Field(
+        ...,
+        description="The array object made up of multiple items (See the description below)",
+    )
+    folderId: Optional[str] = Field(
+        None,
+        description="If the parameter is defined, images will be added to the corresponding folder.",
+    )
+
+
+class GetItemListRequest(BaseModel):
+    limit: Optional[int] = Field(
+        200,
+        ge=1,
+        le=200,
+        description="The number of items to be displayed. the default number is `200`",
+    )
+    offset: Optional[int] = Field(
+        0,
+        ge=0,
+        description="Offset a collection of results from the api. Start with `0`",
+    )
+    orderBy: Optional[str] = Field(
+        None,
+        description="The sorting order. `CREATEDATE`, `FILESIZE`, `NAME`, `RESOLUTION`, add a minus sign for descending order: `-FILESIZE`",
+    )
+    keyword: Optional[str] = Field(None, description="Filter by the keyword")
+    ext: Optional[str] = Field(
+        None, description="Filter by the extension type, e.g.: `jpg`, `png`"
+    )
+    tags: Optional[str] = Field(
+        None,
+        description="Filter by tags. Use `,` to divide different tags. E.g.: `Design, Poster`",
+    )
+    folders: Optional[str] = Field(
+        None,
+        description="Filter by Folders. Use `,` to divide folder IDs. E.g.: `KAY6NTU6UYI5Q,KBJ8Z60O88VMG`",
+    )
