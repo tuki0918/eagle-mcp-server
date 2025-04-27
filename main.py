@@ -208,12 +208,13 @@ async def add_item_from_url(
             description="If this parameter is defined, the image will be added to the corresponding folder."
         ),
     ] = None,
-    headers: Annotated[
-        dict | None,
-        Query(
-            description="Optional, customize the HTTP headers properties, this could be used to circumvent the security of certain websites."
-        ),
-    ] = None,
+    # TODO: fastapi err
+    # headers: Annotated[
+    #     dict[str, str] | None,
+    #     Query(
+    #         description="Optional, customize the HTTP headers properties, this could be used to circumvent the security of certain websites."
+    #     ),
+    # ] = None,
 ):
     payload = {
         "url": url,
@@ -231,8 +232,8 @@ async def add_item_from_url(
         payload["modificationTime"] = modificationTime
     if folderId is not None:
         payload["folderId"] = folderId
-    if headers is not None:
-        payload["headers"] = headers
+    # if headers is not None:
+    #     payload["headers"] = headers
     return await post_to_eagle_api("/api/item/addFromURL", payload)
 
 
