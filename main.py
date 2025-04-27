@@ -8,6 +8,9 @@ import os
 # Define the base URL for the Eagle API
 EAGLE_API_BASE_URL = os.environ.get("EAGLE_API_BASE_URL", "http://localhost:41595")
 
+print(f"EAGLE_API_BASE_URL env: {os.environ.get('EAGLE_API_BASE_URL')}")
+print(f"EAGLE_API_BASE_URL: {EAGLE_API_BASE_URL}")
+
 app = FastAPI(
     title="Eagle MCP API",
 )
@@ -249,12 +252,13 @@ async def add_item_from_url(
     ),
 )
 async def add_items_from_urls(
-    items: Annotated[
-        list[dict],
-        Query(
-            description="The array object made up of multiple items (See the description below)"
-        ),
-    ],
+    # TODO: fastapi err
+    # items: Annotated[
+    #     list[dict],
+    #     Query(
+    #         description="The array object made up of multiple items (See the description below)"
+    #     ),
+    # ],
     folderId: Annotated[
         str | None,
         Query(
@@ -262,7 +266,8 @@ async def add_items_from_urls(
         ),
     ] = None,
 ):
-    payload = {"items": items}
+    # payload = {"items": items}
+    payload = {}
     if folderId is not None:
         payload["folderId"] = folderId
     return await post_to_eagle_api("/api/item/addFromURLs", payload)
