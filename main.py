@@ -167,7 +167,73 @@ async def get_folder_list_recent():
 
 
 # Item
-# ...
+
+
+@app.post(
+    "/api/item/addFromURL",
+    operation_id="add_item_from_url",
+    tags=["Item"],
+    description=(
+        "Add an image from an address to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_urls`.\n\n"
+        "External API: [https://api.eagle.cool/item/add-from-url](https://api.eagle.cool/item/add-from-url)"
+    ),
+)
+async def add_item_from_url(
+    url: Annotated[
+        str,
+        Query(
+            description="Required, the URL of the image to be added. Supports http, https, base64"
+        ),
+    ],
+    name: Annotated[
+        str, Query(description="Required, the name of the image to be added.")
+    ],
+    website: Annotated[
+        str | None, Query(description="The Address of the source of the image")
+    ] = None,
+    tags: Annotated[list[str] | None, Query(description="Tags for the image.")] = None,
+    star: Annotated[int | None, Query(description="The rating for the image.")] = None,
+    annotation: Annotated[
+        str | None, Query(description="The annotation for the image.")
+    ] = None,
+    modificationTime: Annotated[
+        int | None,
+        Query(
+            description="The creation date of the image. The parameter can be used to alter the image's sorting order in Eagle."
+        ),
+    ] = None,
+    folderId: Annotated[
+        str | None,
+        Query(
+            description="If this parameter is defined, the image will be added to the corresponding folder."
+        ),
+    ] = None,
+    headers: Annotated[
+        dict | None,
+        Query(
+            description="Optional, customize the HTTP headers properties, this could be used to circumvent the security of certain websites."
+        ),
+    ] = None,
+):
+    payload = {
+        "url": url,
+        "name": name,
+    }
+    if website is not None:
+        payload["website"] = website
+    if tags is not None:
+        payload["tags"] = tags
+    if star is not None:
+        payload["star"] = star
+    if annotation is not None:
+        payload["annotation"] = annotation
+    if modificationTime is not None:
+        payload["modificationTime"] = modificationTime
+    if folderId is not None:
+        payload["folderId"] = folderId
+    if headers is not None:
+        payload["headers"] = headers
+    return await post_to_eagle_api("/api/item/addFromURL", payload)
 
 
 mcp = FastApiMCP(
