@@ -14,9 +14,7 @@ router = APIRouter(tags=["Folder"])
     ),
 )
 async def create_folder(data: CreateFolderRequest):
-    payload = {"folderName": data.folderName}
-    if data.parent is not None:
-        payload["parent"] = data.parent
+    payload = data.model_dump(exclude_none=True)
     return await post_to_eagle_api("/api/folder/create", payload)
 
 
@@ -29,7 +27,7 @@ async def create_folder(data: CreateFolderRequest):
     ),
 )
 async def rename_folder(data: RenameFolderRequest):
-    payload = {"folderId": data.folderId, "newName": data.newName}
+    payload = data.model_dump(exclude_none=True)
     return await post_to_eagle_api("/api/folder/rename", payload)
 
 
@@ -42,13 +40,7 @@ async def rename_folder(data: RenameFolderRequest):
     ),
 )
 async def update_folder(data: UpdateFolderRequest):
-    payload = {"folderId": data.folderId}
-    if data.newName is not None:
-        payload["newName"] = data.newName
-    if data.newDescription is not None:
-        payload["newDescription"] = data.newDescription
-    if data.newColor is not None:
-        payload["newColor"] = data.newColor.value
+    payload = data.model_dump(exclude_none=True)
     return await post_to_eagle_api("/api/folder/update", payload)
 
 

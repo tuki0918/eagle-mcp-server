@@ -14,24 +14,7 @@ router = APIRouter(tags=["Item"])
     ),
 )
 async def add_item_from_url(data: AddItemFromURLRequest):
-    payload = {
-        "url": data.url,
-        "name": data.name,
-    }
-    if data.website is not None:
-        payload["website"] = data.website
-    if data.tags is not None:
-        payload["tags"] = data.tags
-    if data.star is not None:
-        payload["star"] = data.star
-    if data.annotation is not None:
-        payload["annotation"] = data.annotation
-    if data.modificationTime is not None:
-        payload["modificationTime"] = data.modificationTime
-    if data.folderId is not None:
-        payload["folderId"] = data.folderId
-    if data.headers is not None:
-        payload["headers"] = data.headers
+    payload = data.model_dump(exclude_none=True)
     return await post_to_eagle_api("/api/item/addFromURL", payload)
 
 
@@ -44,10 +27,8 @@ async def add_item_from_url(data: AddItemFromURLRequest):
     ),
 )
 async def add_items_from_urls(data: AddItemsFromURLsRequest):
-    items = [item.model_dump(exclude_none=True) for item in data.items]
-    payload = {"items": items}
-    if data.folderId is not None:
-        payload["folderId"] = data.folderId
+    payload = data.model_dump(exclude_none=True)
+    payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
     return await post_to_eagle_api("/api/item/addFromURLs", payload)
 
 
@@ -60,18 +41,5 @@ async def add_items_from_urls(data: AddItemsFromURLsRequest):
     ),
 )
 async def get_item_list(data: GetItemListRequest):
-    params = {
-        "limit": data.limit,
-        "offset": data.offset,
-    }
-    if data.orderBy is not None:
-        params["orderBy"] = data.orderBy
-    if data.keyword is not None:
-        params["keyword"] = data.keyword
-    if data.ext is not None:
-        params["ext"] = data.ext
-    if data.tags is not None:
-        params["tags"] = data.tags
-    if data.folders is not None:
-        params["folders"] = data.folders
+    params = data.model_dump(exclude_none=True)
     return await fetch_from_eagle_api("/api/item/list", params=params)
