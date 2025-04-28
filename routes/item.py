@@ -8,10 +8,10 @@ from schemas import (
     GetItemInfoRequest,
     GetItemThumbnailRequest,
     GetItemListRequest,
-    GetItemSourcePathRequest,
+    GetItemSourceRequest,
     UpdateItemRequest,
-    GetItemSourcePathResponse,
-    GetItemSourcePathSuccessResponse,
+    GetItemSourceResponse,
+    GetItemSourceSuccessResponse,
 )
 from utils.eagle_api import eagle_api_get, eagle_api_post
 
@@ -126,13 +126,13 @@ async def update_item(data: UpdateItemRequest):
 
 @router.post(
     "/api/item/source",
-    operation_id="get_item_source_path",
-    response_model=GetItemSourcePathResponse,
+    operation_id="get_item_source",
+    response_model=GetItemSourceResponse,
     description=("Get the source path of the file specified."),
 )
-async def get_item_source_path(
-    data: GetItemSourcePathRequest,
-) -> GetItemSourcePathResponse:
+async def get_item_source(
+    data: GetItemSourceRequest,
+) -> GetItemSourceResponse:
     payload = data.model_dump(exclude_none=True)
 
     library = await eagle_api_get("/api/library/info")
@@ -147,7 +147,7 @@ async def get_item_source_path(
     if source_path is None:
         return ErrorResponse(message="Failed to fetch source path")
 
-    return GetItemSourcePathSuccessResponse(data={"source": source_path})
+    return GetItemSourceSuccessResponse(data={"source": source_path})
 
 
 def construct_source_path(library: dict, item: dict) -> str | None:

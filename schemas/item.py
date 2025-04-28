@@ -190,7 +190,7 @@ class UpdateItemRequest(BaseModel):
     ]
 
 
-class GetItemSourcePathRequest(BaseModel):
+class GetItemSourceRequest(BaseModel):
     id: Annotated[
         str,
         Field(
@@ -200,11 +200,11 @@ class GetItemSourcePathRequest(BaseModel):
     ]
 
 
-class GetItemSourcePathSuccessResponse(SuccessResponse):
+class GetItemSourceSuccessResponse(SuccessResponse):
     data: Annotated[
         Dict[Literal["source"], str],
         Field(...),
     ]
 
 
-GetItemSourcePathResponse = Union[GetItemSourcePathSuccessResponse, ErrorResponse]
+GetItemSourceResponse = Union[GetItemSourceSuccessResponse, ErrorResponse]
