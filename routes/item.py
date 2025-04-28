@@ -9,6 +9,7 @@ from schemas import (
     GetItemThumbnailRequest,
     GetItemListRequest,
     GetItemSourceRequest,
+    MoveItemToTrashRequest,
     UpdateItemRequest,
     GetItemSourceResponse,
     GetItemSourceSuccessResponse,
@@ -110,6 +111,19 @@ async def get_item_thumbnail(data: GetItemThumbnailRequest):
 async def get_item_list(data: GetItemListRequest):
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_get("/api/item/list", payload)
+
+
+@router.post(
+    "/api/item/moveToTrash",
+    operation_id="move_item_to_trash",
+    description=(
+        "Move items to trash.\n\n"
+        "More details: [https://api.eagle.cool/item/api-item-movetotrash](https://api.eagle.cool/item/api-item-movetotrash)"
+    ),
+)
+async def move_item_to_trash(data: MoveItemToTrashRequest):
+    payload = data.model_dump(exclude_none=True)
+    return await eagle_api_post("/api/item/moveToTrash", payload)
 
 
 @router.post(

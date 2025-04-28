@@ -172,6 +172,16 @@ class GetItemListRequest(BaseModel):
     ]
 
 
+class MoveItemToTrashRequest(BaseModel):
+    itemIds: Annotated[
+        List[str],
+        Field(
+            ...,
+            description="Required, ID of the file",
+        ),
+    ]
+
+
 class UpdateItemRequest(BaseModel):
     id: Annotated[
         str,
