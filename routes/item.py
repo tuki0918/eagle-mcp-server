@@ -4,6 +4,7 @@ from schemas import (
     AddItemsFromURLsRequest,
     AddItemFromPathRequest,
     AddItemsFromPathsRequest,
+    GetItemInfoRequest,
     GetItemListRequest,
 )
 from utils.eagle_api import fetch_from_eagle_api, post_to_eagle_api
@@ -63,6 +64,19 @@ async def add_items_from_paths(data: AddItemsFromPathsRequest):
     payload = data.model_dump(exclude_none=True)
     payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
     return await post_to_eagle_api("/api/item/addFromPaths", payload)
+
+
+@router.post(
+    "/api/item/info",
+    operation_id="get_item_info",
+    description=(
+        "Get Properties of the specified file, including the file name, tags, categorizations, folders, dimensions, etc.\n\n"
+        "More details: [https://api.eagle.cool/item/info](https://api.eagle.cool/item/info)"
+    ),
+)
+async def get_item_info(data: GetItemInfoRequest):
+    payload = data.model_dump(exclude_none=True)
+    return await fetch_from_eagle_api("/api/item/info", payload)
 
 
 @router.post(
