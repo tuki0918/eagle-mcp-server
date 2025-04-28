@@ -55,7 +55,7 @@ VS Code
 
 ## Tools
 
-| TODO | Operation ID             | API endpoint (v4.0.0)      | tag         |
+|  __  | Operation ID             | API endpoint               | Category    |
 |:----:|:-------------------------|:---------------------------|:------------|
 | [x]  | `connect`                | /api/connect               | MCP         |
 | [x]  | `get_application_info`   | /api/application/info      | Application |
@@ -80,6 +80,7 @@ VS Code
 | [ ]  | `get_library_history`    | /api/library/history       | Library     |
 | [ ]  | `switch_library`         | /api/library/switch        | Library     |
 | [ ]  | `get_library_icon`       | /api/library/icon          | Library     |
+| [ ]  | ...                      | ...                        | ...         |
 
 > [!NOTE]
 > MCP Server API docs: http://localhost:8000/docs
