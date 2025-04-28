@@ -9,7 +9,7 @@ from schemas import (
     GetItemListRequest,
     UpdateItemRequest,
 )
-from utils.eagle_api import fetch_from_eagle_api, post_to_eagle_api
+from utils.eagle_api import eagle_api_get, post_to_eagle_api
 
 router = APIRouter(tags=["Item"])
 
@@ -78,7 +78,7 @@ async def add_items_from_paths(data: AddItemsFromPathsRequest):
 )
 async def get_item_info(data: GetItemInfoRequest):
     payload = data.model_dump(exclude_none=True)
-    return await fetch_from_eagle_api("/api/item/info", payload)
+    return await eagle_api_get("/api/item/info", payload)
 
 
 @router.post(
@@ -91,7 +91,7 @@ async def get_item_info(data: GetItemInfoRequest):
 )
 async def get_item_thumbnail(data: GetItemThumbnailRequest):
     payload = data.model_dump(exclude_none=True)
-    return await fetch_from_eagle_api("/api/item/thumbnail", payload)
+    return await eagle_api_get("/api/item/thumbnail", payload)
 
 
 @router.post(
@@ -104,7 +104,7 @@ async def get_item_thumbnail(data: GetItemThumbnailRequest):
 )
 async def get_item_list(data: GetItemListRequest):
     payload = data.model_dump(exclude_none=True)
-    return await fetch_from_eagle_api("/api/item/list", payload)
+    return await eagle_api_get("/api/item/list", payload)
 
 
 @router.post(

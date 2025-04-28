@@ -43,7 +43,7 @@ async def request_to_eagle_api(
         }
 
 
-async def fetch_from_eagle_api(endpoint: str, params: dict = None):
+async def eagle_api_get(endpoint: str, params: dict = None):
     return await request_to_eagle_api("GET", endpoint, params=params)
 
 
