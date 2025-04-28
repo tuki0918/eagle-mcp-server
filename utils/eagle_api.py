@@ -1,6 +1,9 @@
 from typing import Literal
 import httpx
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 EAGLE_API_BASE_URL = os.environ.get("EAGLE_API_BASE_URL", "http://localhost:41595")
 
@@ -27,8 +30,13 @@ async def request_to_eagle_api(
             response.raise_for_status()
             return response.json()
     except httpx.RequestError as exc:
+        logger.error(f"Request error occurred: {exc}")
         return {"status": "error", "message": f"An error occurred: {exc}"}
     except httpx.HTTPStatusError as exc:
+        logger.error(
+            f"HTTP error occurred: {exc.response.status_code}, "
+            f"URL: {exc.request.url}, Response: {exc.response.text}"
+        )
         return {
             "status": "error",
             "message": f"HTTP error occurred: {exc.response.status_code}",
