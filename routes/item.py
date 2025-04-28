@@ -150,6 +150,7 @@ async def get_item_source(
 ) -> GetItemSourceResponse:
     payload = data.model_dump(exclude_none=True)
 
+    # `/api/item/info` APIのレスポンスに ファイルパス が含まれるように機能リクエスト済: 2025/04/29
     library = await eagle_api_get("/api/library/info")
     if library.get("status") != "success":
         return ErrorResponse(message="Failed to fetch eagle info")
