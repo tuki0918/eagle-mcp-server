@@ -9,7 +9,7 @@ router = APIRouter(tags=["Application"])
     operation_id="get_application_info",
     description=(
         "Get detailed information on the Eagle App currently running. In most cases, this could be used to determine whether certain functions are available on the user's device.\n\n"
-        "External API: [https://api.eagle.cool/application/info](https://api.eagle.cool/application/info)"
+        "More details: [https://api.eagle.cool/application/info](https://api.eagle.cool/application/info)"
     ),
 )
 async def get_application_info():

@@ -10,7 +10,7 @@ router = APIRouter(tags=["Folder"])
     operation_id="create_folder",
     description=(
         "Create a folder. The created folder will be put at the bottom of the folder list of the current library.\n\n"
-        "External API: [https://api.eagle.cool/folder/create](https://api.eagle.cool/folder/create)"
+        "More details: [https://api.eagle.cool/folder/create](https://api.eagle.cool/folder/create)"
     ),
 )
 async def create_folder(data: CreateFolderRequest):
@@ -23,7 +23,7 @@ async def create_folder(data: CreateFolderRequest):
     operation_id="rename_folder",
     description=(
         "Rename the specified folder.\n\n"
-        "External API: [https://api.eagle.cool/folder/rename](https://api.eagle.cool/folder/rename)"
+        "More details: [https://api.eagle.cool/folder/rename](https://api.eagle.cool/folder/rename)"
     ),
 )
 async def rename_folder(data: RenameFolderRequest):
@@ -36,7 +36,7 @@ async def rename_folder(data: RenameFolderRequest):
     operation_id="update_folder",
     description=(
         "Update the specified folder.\n\n"
-        "External API: [https://api.eagle.cool/folder/update](https://api.eagle.cool/folder/update)"
+        "More details: [https://api.eagle.cool/folder/update](https://api.eagle.cool/folder/update)"
     ),
 )
 async def update_folder(data: UpdateFolderRequest):
@@ -49,7 +49,7 @@ async def update_folder(data: UpdateFolderRequest):
     operation_id="get_folder_list",
     description=(
         "Get the list of folders of the current library.\n\n"
-        "External API: [https://api.eagle.cool/folder/list](https://api.eagle.cool/folder/list)"
+        "More details: [https://api.eagle.cool/folder/list](https://api.eagle.cool/folder/list)"
     ),
 )
 async def get_folder_list():
@@ -61,7 +61,7 @@ async def get_folder_list():
     operation_id="get_folder_list_recent",
     description=(
         "Get the list of folders recently used by the user.\n\n"
-        "External API: [https://api.eagle.cool/folder/list-recent](https://api.eagle.cool/folder/list-recent)"
+        "More details: [https://api.eagle.cool/folder/list-recent](https://api.eagle.cool/folder/list-recent)"
     ),
 )
 async def get_folder_list_recent():

@@ -16,7 +16,7 @@ router = APIRouter(tags=["Item"])
     operation_id="add_item_from_url",
     description=(
         "Add an image from an address to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_urls`.\n\n"
-        "External API: [https://api.eagle.cool/item/add-from-url](https://api.eagle.cool/item/add-from-url)"
+        "More details: [https://api.eagle.cool/item/add-from-url](https://api.eagle.cool/item/add-from-url)"
     ),
 )
 async def add_item_from_url(data: AddItemFromURLRequest):
@@ -29,7 +29,7 @@ async def add_item_from_url(data: AddItemFromURLRequest):
     operation_id="add_items_from_urls",
     description=(
         "Add multiple images from URLs to Eagle App.\n\n"
-        "External API: [https://api.eagle.cool/item/add-from-urls](https://api.eagle.cool/item/add-from-urls)"
+        "More details: [https://api.eagle.cool/item/add-from-urls](https://api.eagle.cool/item/add-from-urls)"
     ),
 )
 async def add_items_from_urls(data: AddItemsFromURLsRequest):
@@ -43,7 +43,7 @@ async def add_items_from_urls(data: AddItemsFromURLsRequest):
     operation_id="add_item_from_path",
     description=(
         "Add a local file to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_paths`.\n\n"
-        "External API: [https://api.eagle.cool/item/add-from-path](https://api.eagle.cool/item/add-from-path)"
+        "More details: [https://api.eagle.cool/item/add-from-path](https://api.eagle.cool/item/add-from-path)"
     ),
 )
 async def add_item_from_path(data: AddItemFromPathRequest):
@@ -56,7 +56,7 @@ async def add_item_from_path(data: AddItemFromPathRequest):
     operation_id="add_items_from_paths",
     description=(
         "Add multiple local files to Eagle App.\n\n"
-        "External API: [https://api.eagle.cool/item/add-from-paths](https://api.eagle.cool/item/add-from-paths)"
+        "More details: [https://api.eagle.cool/item/add-from-paths](https://api.eagle.cool/item/add-from-paths)"
     ),
 )
 async def add_items_from_paths(data: AddItemsFromPathsRequest):
@@ -70,7 +70,7 @@ async def add_items_from_paths(data: AddItemsFromPathsRequest):
     operation_id="get_item_list",
     description=(
         "Get items that match the filter condition.\n\n"
-        "External API: [https://api.eagle.cool/item/list](https://api.eagle.cool/item/list)"
+        "More details: [https://api.eagle.cool/item/list](https://api.eagle.cool/item/list)"
     ),
 )
 async def get_item_list(data: GetItemListRequest):
