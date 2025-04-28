@@ -1,4 +1,4 @@
-# Eagle MCP Server
+# Eagle MCP Server (Unofficial)
 
 A Model Context Protocol (MCP) server for Eagle.
 
@@ -66,8 +66,8 @@ VS Code
 | [x]  | `get_folder_list_recent` | /api/folder/listRecent     | Folder      |
 | [x]  | `add_item_from_url`      | /api/item/addFromURL       | Item        |
 | [x]  | `add_items_from_urls`    | /api/item/addFromURLs      | Item        |
-| [ ]  | `add_item_from_path`     | /api/item/addFromPath      | Item        |
-| [ ]  | `add_items_from_paths`   | /api/item/addFromPaths     | Item        |
+| [x]  | `add_item_from_path`     | /api/item/addFromPath      | Item        |
+| [x]  | `add_items_from_paths`   | /api/item/addFromPaths     | Item        |
 | [ ]  | `add_bookmark`           | /api/item/addBookmark      | Item        |
 | [ ]  | `get_item_info`          | /api/item/info             | Item        |
 | [ ]  | `get_item_thumbnail`     | /api/item/thumbnail        | Item        |
@@ -84,5 +84,9 @@ VS Code
 > [!NOTE]
 > MCP Server API docs: http://localhost:8000/docs
 
+----
+
 > [!IMPORTANT]
-> Official Eagle API docs: https://api.eagle.cool/
+> Official Eagle API docs: https://api.eagle.cool/<br />
+> Changelog: https://api.eagle.cool/changelog<br />
+> Release Note: https://eagle.cool/blog/inside-eagle<br />
