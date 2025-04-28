@@ -5,6 +5,7 @@ from schemas import (
     AddItemFromPathRequest,
     AddItemsFromPathsRequest,
     GetItemInfoRequest,
+    GetItemThumbnailRequest,
     GetItemListRequest,
 )
 from utils.eagle_api import fetch_from_eagle_api, post_to_eagle_api
@@ -77,6 +78,19 @@ async def add_items_from_paths(data: AddItemsFromPathsRequest):
 async def get_item_info(data: GetItemInfoRequest):
     payload = data.model_dump(exclude_none=True)
     return await fetch_from_eagle_api("/api/item/info", payload)
+
+
+@router.post(
+    "/api/item/thumbnail",
+    operation_id="get_item_thumbnail",
+    description=(
+        "Get the path of the thumbnail of the file specified. If you would like to get a batch of thumbnail paths, the combination of Library path + Object IDis recommended.\n\n"
+        "More details: [https://api.eagle.cool/item/thumbnail](https://api.eagle.cool/item/thumbnail)"
+    ),
+)
+async def get_item_thumbnail(data: GetItemThumbnailRequest):
+    payload = data.model_dump(exclude_none=True)
+    return await fetch_from_eagle_api("/api/item/thumbnail", payload)
 
 
 @router.post(

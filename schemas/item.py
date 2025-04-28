@@ -114,6 +114,16 @@ class GetItemInfoRequest(BaseModel):
     ]
 
 
+class GetItemThumbnailRequest(BaseModel):
+    id: Annotated[
+        str,
+        Field(
+            ...,
+            description="ID of the file",
+        ),
+    ]
+
+
 class GetItemListRequest(BaseModel):
     limit: Annotated[
         Optional[int],
