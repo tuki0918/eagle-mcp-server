@@ -78,7 +78,7 @@ VS Code
 | [ ] | `refresh_item_palette`   | /api/item/refreshPalette   | Item        |
 | [ ] | `refresh_item_thumbnail` | /api/item/refreshThumbnail | Item        |
 | ✅ | `update_item`            | /api/item/update           | Item        |
-| [ ] | `get_library_info`       | /api/library/info          | Library     |
+| ✅ | `get_library_info`       | /api/library/info          | Library     |
 | [ ] | `get_library_history`    | /api/library/history       | Library     |
 | [ ] | `switch_library`         | /api/library/switch        | Library     |
 | [ ] | `get_library_icon`       | /api/library/icon          | Library     |
