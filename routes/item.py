@@ -14,6 +14,7 @@ from schemas import (
     GetItemSourceSuccessResponse,
 )
 from utils.eagle_api import eagle_api_get, eagle_api_post
+import os
 
 router = APIRouter(tags=["Item"])
 
@@ -157,6 +158,8 @@ def construct_source_path(library: dict, item: dict) -> str | None:
         item_name = item["data"]["name"]
         item_ext = item["data"]["ext"]
 
-        return f"{library_path}/images/{item_id}.info/{item_name}.{item_ext}"
+        return os.path.join(
+            library_path, "images", f"{item_id}.info", f"{item_name}.{item_ext}"
+        )
     except KeyError:
         return None
