@@ -6,11 +6,12 @@ class AddBaseItem(BaseModel):
     name: Annotated[
         str, Field(..., description="Required, the name of the image to be added.")
     ]
+    # APIのドキュメントによっては、項目名がurlの場合がある
     website: Annotated[
         Optional[str], Field(None, description="The Address of the source of the image")
     ]
     tags: Annotated[Optional[List[str]], Field(None, description="Tags for the image.")]
-    # ドキュメントによっては記載されている場合とされていない場合がある。実際には利用可能
+    # APIのドキュメントによっては、記載されていない場合がある。実際には利用可能
     star: Annotated[
         Optional[int], Field(None, ge=0, le=5, description="The rating for the image.")
     ]

@@ -71,13 +71,13 @@ VS Code
 | [x]  | `add_item_from_path`     | /api/item/addFromPath      | Item        |
 | [x]  | `add_items_from_paths`   | /api/item/addFromPaths     | Item        |
 | [ ]  | `add_bookmark`           | /api/item/addBookmark      | Item        |
-| [ ]  | `get_item_info`          | /api/item/info             | Item        |
-| [ ]  | `get_item_thumbnail`     | /api/item/thumbnail        | Item        |
+| [x]  | `get_item_info`          | /api/item/info             | Item        |
+| [x]  | `get_item_thumbnail`     | /api/item/thumbnail        | Item        |
 | [x]  | `get_item_list`          | /api/item/list             | Item        |
 | [ ]  | `move_item_to_trash`     | /api/item/moveToTrash      | Item        |
 | [ ]  | `refresh_item_palette`   | /api/item/refreshPalette   | Item        |
 | [ ]  | `refresh_item_thumbnail` | /api/item/refreshThumbnail | Item        |
-| [ ]  | `update_item`            | /api/item/update           | Item        |
+| [x]  | `update_item`            | /api/item/update           | Item        |
 | [ ]  | `get_library_info`       | /api/library/info          | Library     |
 | [ ]  | `get_library_history`    | /api/library/history       | Library     |
 | [ ]  | `switch_library`         | /api/library/switch        | Library     |
