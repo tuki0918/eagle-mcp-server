@@ -1,9 +1,9 @@
 from fastapi import APIRouter
-from schemas import ConnectResponse
+from schemas import ConnectResponse, ConnectSuccessResponse
 
 router = APIRouter(tags=["MCP"])
 
 
 @router.get("/api/connect", operation_id="connect", response_model=ConnectResponse)
 async def connect() -> ConnectResponse:
-    return ConnectResponse(status="success", message="Connected!")
+    return ConnectSuccessResponse(status="success", message="Connected!")

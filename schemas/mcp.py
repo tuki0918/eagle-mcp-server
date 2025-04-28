@@ -1,7 +1,13 @@
-from pydantic import BaseModel, Field
-from typing import Annotated, Literal
+from pydantic import Field
+from typing import Annotated, Union
+from schemas import SuccessResponse, ErrorResponse
 
 
-class ConnectResponse(BaseModel):
-    status: Annotated[Literal["success", "error"], Field(...)]
-    message: Annotated[str, Field(...)]
+class ConnectSuccessResponse(SuccessResponse):
+    message: Annotated[
+        str,
+        Field(...),
+    ]
+
+
+ConnectResponse = Union[ConnectSuccessResponse, ErrorResponse]
