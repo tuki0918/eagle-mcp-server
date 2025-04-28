@@ -1,5 +1,7 @@
 # Eagle MCP Server (Unofficial)
 
+![](.github/docs/cover.png)
+
 A Model Context Protocol (MCP) server for Eagle.
 
 ## Requirements
