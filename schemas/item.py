@@ -3,13 +3,6 @@ from typing import Annotated, Dict, Optional, List
 
 
 class AddBaseItem(BaseModel):
-    url: Annotated[
-        str,
-        Field(
-            ...,
-            description="Required, the URL of the image to be added. Supports http, https, base64",
-        ),
-    ]
     name: Annotated[
         str, Field(..., description="Required, the name of the image to be added.")
     ]
@@ -17,11 +10,22 @@ class AddBaseItem(BaseModel):
         Optional[str], Field(None, description="The Address of the source of the image")
     ]
     tags: Annotated[Optional[List[str]], Field(None, description="Tags for the image.")]
+    # ドキュメントによっては記載されている場合とされていない場合がある。実際には利用可能
     star: Annotated[
         Optional[int], Field(None, ge=0, le=5, description="The rating for the image.")
     ]
     annotation: Annotated[
         Optional[str], Field(None, description="The annotation for the image.")
+    ]
+
+
+class AddBaseItemFromURL(AddBaseItem):
+    url: Annotated[
+        str,
+        Field(
+            ...,
+            description="Required, the URL of the image to be added. Supports http, https, base64",
+        ),
     ]
     modificationTime: Annotated[
         Optional[int],
@@ -39,7 +43,13 @@ class AddBaseItem(BaseModel):
     ]
 
 
-class AddItemFromURLRequest(AddBaseItem):
+class AddBaseItemFromPath(AddBaseItem):
+    path: Annotated[
+        str, Field(..., description="Required, the path of the local file.")
+    ]
+
+
+class AddItemFromURLRequest(AddBaseItemFromURL):
     folderId: Annotated[
         Optional[str],
         Field(
@@ -51,7 +61,7 @@ class AddItemFromURLRequest(AddBaseItem):
 
 class AddItemsFromURLsRequest(BaseModel):
     items: Annotated[
-        List[AddBaseItem],
+        List[AddBaseItemFromURL],
         Field(
             ...,
             description="The array object made up of multiple items (See the description below)",
@@ -62,6 +72,16 @@ class AddItemsFromURLsRequest(BaseModel):
         Field(
             None,
             description="If the parameter is defined, images will be added to the corresponding folder.",
+        ),
+    ]
+
+
+class AddItemFromPathRequest(AddBaseItemFromPath):
+    folderId: Annotated[
+        Optional[str],
+        Field(
+            None,
+            description="If this parameter is defined, the image will be added to the corresponding folder.",
         ),
     ]
 

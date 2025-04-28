@@ -1,5 +1,10 @@
 from fastapi import APIRouter
-from schemas import AddItemFromURLRequest, AddItemsFromURLsRequest, GetItemListRequest
+from schemas import (
+    AddItemFromURLRequest,
+    AddItemsFromURLsRequest,
+    AddItemFromPathRequest,
+    GetItemListRequest,
+)
 from utils.eagle_api import fetch_from_eagle_api, post_to_eagle_api
 
 router = APIRouter(tags=["Item"])
@@ -30,6 +35,19 @@ async def add_items_from_urls(data: AddItemsFromURLsRequest):
     payload = data.model_dump(exclude_none=True)
     payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
     return await post_to_eagle_api("/api/item/addFromURLs", payload)
+
+
+@router.post(
+    "/api/item/addFromPath",
+    operation_id="add_item_from_path",
+    description=(
+        "Add a local file to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_paths`.\n\n"
+        "External API: [https://api.eagle.cool/item/add-from-path](https://api.eagle.cool/item/add-from-path)"
+    ),
+)
+async def add_item_from_path(data: AddItemFromPathRequest):
+    payload = data.model_dump(exclude_none=True)
+    return await post_to_eagle_api("/api/item/addFromPath", payload)
 
 
 @router.post(
