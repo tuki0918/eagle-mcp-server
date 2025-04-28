@@ -3,11 +3,11 @@ from typing import Annotated, Literal, Union
 
 
 class SuccessResponse(BaseModel):
-    status: Literal["success"]
+    status: Literal["success"] = "success"
 
 
 class ErrorResponse(BaseModel):
-    status: Literal["error"]
+    status: Literal["error"] = "error"
     message: Annotated[
         str,
         Field(...),
