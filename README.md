@@ -1,4 +1,4 @@
-# Eagle MCP Server
+# Eagle MCP Server (Unofficial)
 
 A Model Context Protocol (MCP) server for Eagle.
 
@@ -84,5 +84,9 @@ VS Code
 > [!NOTE]
 > MCP Server API docs: http://localhost:8000/docs
 
+----
+
 > [!IMPORTANT]
-> Official Eagle API docs: https://api.eagle.cool/
+> Official Eagle API docs: https://api.eagle.cool/<br />
+> Changelog: https://api.eagle.cool/changelog<br />
+> Release Note: https://eagle.cool/blog/inside-eagle<br />
