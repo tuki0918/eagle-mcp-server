@@ -7,6 +7,7 @@ from schemas import (
     GetItemInfoRequest,
     GetItemThumbnailRequest,
     GetItemListRequest,
+    UpdateItemRequest,
 )
 from utils.eagle_api import fetch_from_eagle_api, post_to_eagle_api
 
@@ -104,3 +105,16 @@ async def get_item_thumbnail(data: GetItemThumbnailRequest):
 async def get_item_list(data: GetItemListRequest):
     payload = data.model_dump(exclude_none=True)
     return await fetch_from_eagle_api("/api/item/list", payload)
+
+
+@router.post(
+    "/api/item/update",
+    operation_id="update_item",
+    description=(
+        "Modify data of specified fields of the item.\n\n"
+        "More details: [https://api.eagle.cool/item/update](https://api.eagle.cool/item/update)"
+    ),
+)
+async def update_item(data: UpdateItemRequest):
+    payload = data.model_dump(exclude_none=True)
+    return await post_to_eagle_api("/api/item/update", payload)

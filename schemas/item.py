@@ -168,3 +168,21 @@ class GetItemListRequest(BaseModel):
             description="Filter by Folders. Use `,` to divide folder IDs. E.g.: `KAY6NTU6UYI5Q,KBJ8Z60O88VMG`",
         ),
     ]
+
+
+class UpdateItemRequest(BaseModel):
+    id: Annotated[
+        str,
+        Field(
+            ...,
+            description="Required, the ID of the item to be modified",
+        ),
+    ]
+    tags: Annotated[Optional[List[str]], Field(None, description="Optional, tags")]
+    annotation: Annotated[
+        Optional[str], Field(None, description="Optional, annotations")
+    ]
+    url: Annotated[Optional[str], Field(None, description="Optional, the source url")]
+    star: Annotated[
+        Optional[int], Field(None, ge=0, le=5, description="Optional, ratings")
+    ]
