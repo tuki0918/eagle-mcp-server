@@ -6,4 +6,4 @@ router = APIRouter(tags=["MCP"])
 
 @router.get("/api/connect", operation_id="connect", response_model=ConnectResponse)
 async def connect() -> ConnectResponse:
-    return ConnectResponse(message="Connected!")
+    return ConnectResponse(status="success", message="Connected!")
