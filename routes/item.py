@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from schemas import (
+    ErrorResponse,
     AddItemFromURLRequest,
     AddItemsFromURLsRequest,
     AddItemFromPathRequest,
@@ -7,7 +8,10 @@ from schemas import (
     GetItemInfoRequest,
     GetItemThumbnailRequest,
     GetItemListRequest,
+    GetItemSourcePathRequest,
     UpdateItemRequest,
+    GetItemSourcePathResponse,
+    GetItemSourcePathSuccessResponse,
 )
 from utils.eagle_api import eagle_api_get, eagle_api_post
 
@@ -118,3 +122,35 @@ async def get_item_list(data: GetItemListRequest):
 async def update_item(data: UpdateItemRequest):
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_post("/api/item/update", payload)
+
+
+@router.post(
+    "/api/item/source",
+    operation_id="get_item_source_path",
+    response_model=GetItemSourcePathResponse,
+    description=("Get the source path of the file specified."),
+)
+async def get_item_source_path(
+    data: GetItemSourcePathRequest,
+) -> GetItemSourcePathResponse:
+    payload = data.model_dump(exclude_none=True)
+
+    library = await eagle_api_get("/api/library/info")
+    if library.get("status") != "success":
+        return ErrorResponse(message="Failed to fetch library info")
+
+    item = await eagle_api_get("/api/item/info", payload)
+    if item.get("status") != "success":
+        return ErrorResponse(message="Failed to fetch item info")
+
+    source_path = construct_source_path(library, item)
+    return GetItemSourcePathSuccessResponse(data={"source": source_path})
+
+
+def construct_source_path(library: dict, item: dict) -> str:
+    library_path = library["data"]["library"]["path"]
+    item_id = item["data"]["id"]
+    item_name = item["data"]["name"]
+    item_ext = item["data"]["ext"]
+
+    return f"{library_path}/images/{item_id}.info/{item_name}.{item_ext}"
