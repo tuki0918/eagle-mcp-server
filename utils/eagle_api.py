@@ -47,5 +47,5 @@ async def eagle_api_get(endpoint: str, params: dict = None):
     return await request_to_eagle_api("GET", endpoint, params=params)
 
 
-async def post_to_eagle_api(endpoint: str, payload: dict):
+async def eagle_api_post(endpoint: str, payload: dict):
     return await request_to_eagle_api("POST", endpoint, payload=payload)

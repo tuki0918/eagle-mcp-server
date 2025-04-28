@@ -9,7 +9,7 @@ from schemas import (
     GetItemListRequest,
     UpdateItemRequest,
 )
-from utils.eagle_api import eagle_api_get, post_to_eagle_api
+from utils.eagle_api import eagle_api_get, eagle_api_post
 
 router = APIRouter(tags=["Item"])
 
@@ -24,7 +24,7 @@ router = APIRouter(tags=["Item"])
 )
 async def add_item_from_url(data: AddItemFromURLRequest):
     payload = data.model_dump(exclude_none=True)
-    return await post_to_eagle_api("/api/item/addFromURL", payload)
+    return await eagle_api_post("/api/item/addFromURL", payload)
 
 
 @router.post(
@@ -38,7 +38,7 @@ async def add_item_from_url(data: AddItemFromURLRequest):
 async def add_items_from_urls(data: AddItemsFromURLsRequest):
     payload = data.model_dump(exclude_none=True)
     payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
-    return await post_to_eagle_api("/api/item/addFromURLs", payload)
+    return await eagle_api_post("/api/item/addFromURLs", payload)
 
 
 @router.post(
@@ -51,7 +51,7 @@ async def add_items_from_urls(data: AddItemsFromURLsRequest):
 )
 async def add_item_from_path(data: AddItemFromPathRequest):
     payload = data.model_dump(exclude_none=True)
-    return await post_to_eagle_api("/api/item/addFromPath", payload)
+    return await eagle_api_post("/api/item/addFromPath", payload)
 
 
 @router.post(
@@ -65,7 +65,7 @@ async def add_item_from_path(data: AddItemFromPathRequest):
 async def add_items_from_paths(data: AddItemsFromPathsRequest):
     payload = data.model_dump(exclude_none=True)
     payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
-    return await post_to_eagle_api("/api/item/addFromPaths", payload)
+    return await eagle_api_post("/api/item/addFromPaths", payload)
 
 
 @router.post(
@@ -117,4 +117,4 @@ async def get_item_list(data: GetItemListRequest):
 )
 async def update_item(data: UpdateItemRequest):
     payload = data.model_dump(exclude_none=True)
-    return await post_to_eagle_api("/api/item/update", payload)
+    return await eagle_api_post("/api/item/update", payload)
