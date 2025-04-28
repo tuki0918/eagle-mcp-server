@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from schemas import CreateFolderRequest, RenameFolderRequest, UpdateFolderRequest
-from utils.eagle_api import fetch_from_eagle_api, post_to_eagle_api
+from utils.eagle_api import eagle_api_get, eagle_api_post
 
 router = APIRouter(tags=["Folder"])
 
@@ -15,7 +15,7 @@ router = APIRouter(tags=["Folder"])
 )
 async def create_folder(data: CreateFolderRequest):
     payload = data.model_dump(exclude_none=True)
-    return await post_to_eagle_api("/api/folder/create", payload)
+    return await eagle_api_post("/api/folder/create", payload)
 
 
 @router.post(
@@ -28,7 +28,7 @@ async def create_folder(data: CreateFolderRequest):
 )
 async def rename_folder(data: RenameFolderRequest):
     payload = data.model_dump(exclude_none=True)
-    return await post_to_eagle_api("/api/folder/rename", payload)
+    return await eagle_api_post("/api/folder/rename", payload)
 
 
 @router.post(
@@ -41,7 +41,7 @@ async def rename_folder(data: RenameFolderRequest):
 )
 async def update_folder(data: UpdateFolderRequest):
     payload = data.model_dump(exclude_none=True)
-    return await post_to_eagle_api("/api/folder/update", payload)
+    return await eagle_api_post("/api/folder/update", payload)
 
 
 @router.get(
@@ -53,7 +53,7 @@ async def update_folder(data: UpdateFolderRequest):
     ),
 )
 async def get_folder_list():
-    return await fetch_from_eagle_api("/api/folder/list")
+    return await eagle_api_get("/api/folder/list")
 
 
 @router.get(
@@ -65,4 +65,4 @@ async def get_folder_list():
     ),
 )
 async def get_folder_list_recent():
-    return await fetch_from_eagle_api("/api/folder/listRecent")
+    return await eagle_api_get("/api/folder/listRecent")

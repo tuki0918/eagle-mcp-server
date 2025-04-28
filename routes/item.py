@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from schemas import (
+    ErrorResponse,
     AddItemFromURLRequest,
     AddItemsFromURLsRequest,
     AddItemFromPathRequest,
@@ -7,9 +8,13 @@ from schemas import (
     GetItemInfoRequest,
     GetItemThumbnailRequest,
     GetItemListRequest,
+    GetItemSourceRequest,
     UpdateItemRequest,
+    GetItemSourceResponse,
+    GetItemSourceSuccessResponse,
 )
-from utils.eagle_api import fetch_from_eagle_api, post_to_eagle_api
+from utils.eagle_api import eagle_api_get, eagle_api_post
+import os
 
 router = APIRouter(tags=["Item"])
 
@@ -24,7 +29,7 @@ router = APIRouter(tags=["Item"])
 )
 async def add_item_from_url(data: AddItemFromURLRequest):
     payload = data.model_dump(exclude_none=True)
-    return await post_to_eagle_api("/api/item/addFromURL", payload)
+    return await eagle_api_post("/api/item/addFromURL", payload)
 
 
 @router.post(
@@ -38,7 +43,7 @@ async def add_item_from_url(data: AddItemFromURLRequest):
 async def add_items_from_urls(data: AddItemsFromURLsRequest):
     payload = data.model_dump(exclude_none=True)
     payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
-    return await post_to_eagle_api("/api/item/addFromURLs", payload)
+    return await eagle_api_post("/api/item/addFromURLs", payload)
 
 
 @router.post(
@@ -51,7 +56,7 @@ async def add_items_from_urls(data: AddItemsFromURLsRequest):
 )
 async def add_item_from_path(data: AddItemFromPathRequest):
     payload = data.model_dump(exclude_none=True)
-    return await post_to_eagle_api("/api/item/addFromPath", payload)
+    return await eagle_api_post("/api/item/addFromPath", payload)
 
 
 @router.post(
@@ -65,7 +70,7 @@ async def add_item_from_path(data: AddItemFromPathRequest):
 async def add_items_from_paths(data: AddItemsFromPathsRequest):
     payload = data.model_dump(exclude_none=True)
     payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
-    return await post_to_eagle_api("/api/item/addFromPaths", payload)
+    return await eagle_api_post("/api/item/addFromPaths", payload)
 
 
 @router.post(
@@ -78,7 +83,7 @@ async def add_items_from_paths(data: AddItemsFromPathsRequest):
 )
 async def get_item_info(data: GetItemInfoRequest):
     payload = data.model_dump(exclude_none=True)
-    return await fetch_from_eagle_api("/api/item/info", payload)
+    return await eagle_api_get("/api/item/info", payload)
 
 
 @router.post(
@@ -91,7 +96,7 @@ async def get_item_info(data: GetItemInfoRequest):
 )
 async def get_item_thumbnail(data: GetItemThumbnailRequest):
     payload = data.model_dump(exclude_none=True)
-    return await fetch_from_eagle_api("/api/item/thumbnail", payload)
+    return await eagle_api_get("/api/item/thumbnail", payload)
 
 
 @router.post(
@@ -104,7 +109,7 @@ async def get_item_thumbnail(data: GetItemThumbnailRequest):
 )
 async def get_item_list(data: GetItemListRequest):
     payload = data.model_dump(exclude_none=True)
-    return await fetch_from_eagle_api("/api/item/list", payload)
+    return await eagle_api_get("/api/item/list", payload)
 
 
 @router.post(
@@ -117,4 +122,44 @@ async def get_item_list(data: GetItemListRequest):
 )
 async def update_item(data: UpdateItemRequest):
     payload = data.model_dump(exclude_none=True)
-    return await post_to_eagle_api("/api/item/update", payload)
+    return await eagle_api_post("/api/item/update", payload)
+
+
+@router.post(
+    "/api/item/source",
+    operation_id="get_item_source",
+    response_model=GetItemSourceResponse,
+    description=("Get the source path of the file specified."),
+)
+async def get_item_source(
+    data: GetItemSourceRequest,
+) -> GetItemSourceResponse:
+    payload = data.model_dump(exclude_none=True)
+
+    library = await eagle_api_get("/api/library/info")
+    if library.get("status") != "success":
+        return ErrorResponse(message="Failed to fetch eagle info")
+
+    item = await eagle_api_get("/api/item/info", payload)
+    if item.get("status") != "success":
+        return ErrorResponse(message="Failed to fetch item info")
+
+    source_path = construct_source_path(library, item)
+    if source_path is None:
+        return ErrorResponse(message="Failed to fetch source path")
+
+    return GetItemSourceSuccessResponse(data={"source": source_path})
+
+
+def construct_source_path(library: dict, item: dict) -> str | None:
+    try:
+        library_path = library["data"]["library"]["path"]
+        item_id = item["data"]["id"]
+        item_name = item["data"]["name"]
+        item_ext = item["data"]["ext"]
+
+        return os.path.join(
+            library_path, "images", f"{item_id}.info", f"{item_name}.{item_ext}"
+        )
+    except KeyError:
+        return None

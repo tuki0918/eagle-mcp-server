@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from utils.eagle_api import fetch_from_eagle_api
+from utils.eagle_api import eagle_api_get
 
 router = APIRouter(tags=["Application"])
 
@@ -13,4 +13,4 @@ router = APIRouter(tags=["Application"])
     ),
 )
 async def get_application_info():
-    return await fetch_from_eagle_api("/api/application/info")
+    return await eagle_api_get("/api/application/info")

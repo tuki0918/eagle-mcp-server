@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
-from typing import Annotated, Dict, Optional, List
+from typing import Annotated, Dict, Optional, List, Literal, Union
+from schemas import SuccessResponse, ErrorResponse
 
 
 class AddBaseItem(BaseModel):
@@ -187,3 +188,23 @@ class UpdateItemRequest(BaseModel):
     star: Annotated[
         Optional[int], Field(None, ge=0, le=5, description="Optional, ratings")
     ]
+
+
+class GetItemSourceRequest(BaseModel):
+    id: Annotated[
+        str,
+        Field(
+            ...,
+            description="ID of the file",
+        ),
+    ]
+
+
+class GetItemSourceSuccessResponse(SuccessResponse):
+    data: Annotated[
+        Dict[Literal["source"], str],
+        Field(...),
+    ]
+
+
+GetItemSourceResponse = Union[GetItemSourceSuccessResponse, ErrorResponse]
