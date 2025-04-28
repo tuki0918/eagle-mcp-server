@@ -4,10 +4,7 @@ from schemas import SuccessResponse, ErrorResponse
 
 
 class ConnectSuccessResponse(SuccessResponse):
-    message: Annotated[
-        str,
-        Field(...),
-    ]
+    message: Annotated[str, Field(...)]
 
 
 ConnectResponse = Union[ConnectSuccessResponse, ErrorResponse]
