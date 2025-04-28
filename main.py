@@ -1,16 +1,23 @@
 from fastapi import FastAPI
 from fastapi_mcp import FastApiMCP
-from routes import application_router, folder_router, item_router, mcp_router
+from routes import (
+    mcp_router,
+    application_router,
+    folder_router,
+    item_router,
+    library_router,
+)
 
 app = FastAPI(
     title="Eagle MCP API",
 )
 
 # Register routers
+app.include_router(mcp_router)
 app.include_router(application_router)
 app.include_router(folder_router)
 app.include_router(item_router)
-app.include_router(mcp_router)
+app.include_router(library_router)
 
 mcp = FastApiMCP(
     app,
