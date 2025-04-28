@@ -86,6 +86,24 @@ class AddItemFromPathRequest(AddBaseItemFromPath):
     ]
 
 
+class AddItemsFromPathsRequest(BaseModel):
+    # ドキュメントがおそらく間違っている。
+    items: Annotated[
+        List[AddBaseItemFromPath],
+        Field(
+            ...,
+            description="The array object made up of multiple items (See the description below)",
+        ),
+    ]
+    folderId: Annotated[
+        Optional[str],
+        Field(
+            None,
+            description="If this parameter is defined, the image will be added to the corresponding folder.",
+        ),
+    ]
+
+
 class GetItemListRequest(BaseModel):
     limit: Annotated[
         Optional[int],

@@ -3,6 +3,7 @@ from schemas import (
     AddItemFromURLRequest,
     AddItemsFromURLsRequest,
     AddItemFromPathRequest,
+    AddItemsFromPathsRequest,
     GetItemListRequest,
 )
 from utils.eagle_api import fetch_from_eagle_api, post_to_eagle_api
@@ -48,6 +49,20 @@ async def add_items_from_urls(data: AddItemsFromURLsRequest):
 async def add_item_from_path(data: AddItemFromPathRequest):
     payload = data.model_dump(exclude_none=True)
     return await post_to_eagle_api("/api/item/addFromPath", payload)
+
+
+@router.post(
+    "/api/item/addFromPaths",
+    operation_id="add_items_from_paths",
+    description=(
+        "Add multiple local files to Eagle App.\n\n"
+        "External API: [https://api.eagle.cool/item/add-from-paths](https://api.eagle.cool/item/add-from-paths)"
+    ),
+)
+async def add_items_from_paths(data: AddItemsFromPathsRequest):
+    payload = data.model_dump(exclude_none=True)
+    payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
+    return await post_to_eagle_api("/api/item/addFromPaths", payload)
 
 
 @router.post(
