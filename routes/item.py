@@ -137,20 +137,26 @@ async def get_item_source_path(
 
     library = await eagle_api_get("/api/library/info")
     if library.get("status") != "success":
-        return ErrorResponse(message="Failed to fetch library info")
+        return ErrorResponse(message="Failed to fetch eagle info")
 
     item = await eagle_api_get("/api/item/info", payload)
     if item.get("status") != "success":
         return ErrorResponse(message="Failed to fetch item info")
 
     source_path = construct_source_path(library, item)
+    if source_path is None:
+        return ErrorResponse(message="Failed to fetch source path")
+
     return GetItemSourcePathSuccessResponse(data={"source": source_path})
 
 
-def construct_source_path(library: dict, item: dict) -> str:
-    library_path = library["data"]["library"]["path"]
-    item_id = item["data"]["id"]
-    item_name = item["data"]["name"]
-    item_ext = item["data"]["ext"]
+def construct_source_path(library: dict, item: dict) -> str | None:
+    try:
+        library_path = library["data"]["library"]["path"]
+        item_id = item["data"]["id"]
+        item_name = item["data"]["name"]
+        item_ext = item["data"]["ext"]
 
-    return f"{library_path}/images/{item_id}.info/{item_name}.{item_ext}"
+        return f"{library_path}/images/{item_id}.info/{item_name}.{item_ext}"
+    except KeyError:
+        return None
