@@ -4,10 +4,9 @@
 
 A Model Context Protocol (MCP) server for Eagle.
 
-> [!IMPORTANT]
-> Official Eagle API docs: https://api.eagle.cool/<br />
-> Changelog: https://api.eagle.cool/changelog<br />
-> Release Note: https://eagle.cool/blog/inside-eagle<br />
+- Official Eagle API docs: https://api.eagle.cool/<br />
+- Changelog: https://api.eagle.cool/changelog<br />
+- Release Note: https://eagle.cool/blog/inside-eagle<br />
 
 ## Requirements
 
@@ -90,7 +89,6 @@ VS Code
 | [ ] | `get_library_icon`       | /api/library/icon          | Library     |
 | [ ] | ...                      | ...                        | ...         |
 
-> [!NOTE]
 > MCP Server API docs: http://localhost:8000/docs
 
 ## Use Cases
@@ -122,8 +120,8 @@ flowchart LR
     e2@{ animate: true }
 ```
 
-> [!NOTE]
-> You have access to the filesystem.
+> [!TIP]
+> You have direct access to the filesystem.
 
 2) Same Network (Eagle App, MCP Server) + Other Network (MCP Client)
 
@@ -152,6 +150,9 @@ flowchart LR
     e1@{ animate: true }
     e2@{ animate: true }
 ```
+
+> [!WARNING]
+> You don't have access to the filesystem.
 
 3) Other Network
 
@@ -183,3 +184,6 @@ flowchart LR
     e1@{ animate: true }
     e2@{ animate: true }
 ```
+
+> [!WARNING]
+> You don't have access to the filesystem.
