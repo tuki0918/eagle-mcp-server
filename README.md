@@ -92,3 +92,94 @@ VS Code
 
 > [!NOTE]
 > MCP Server API docs: http://localhost:8000/docs
+
+## Use Cases
+
+1) Same Network (Recommended)
+
+```mermaid
+flowchart LR
+
+    subgraph 192.168.1.100
+        direction LR
+        
+        subgraph FileSystem [File System]
+        end
+        subgraph EagleApp [Eagle App<br/>localhost:41595]
+        end
+        subgraph MCPServer [MCP Server<br/>localhost:8000]
+        end
+        subgraph MCPClient [MCP Client]
+        end
+    end
+
+    EagleApp ==> MCPServer e1@==> MCPClient
+    MCPClient e2@==> MCPServer ==> EagleApp
+    EagleApp ==> FileSystem
+    FileSystem ==> EagleApp
+
+    e1@{ animate: true }
+    e2@{ animate: true }
+```
+
+> [!NOTE]
+> You have access to the filesystem.
+
+2) Same Network (Eagle App, MCP Server) + Other Network (MCP Client)
+
+```mermaid
+flowchart LR
+  
+    subgraph 192.168.1.100
+        subgraph FileSystem [File System]
+        end
+        subgraph EagleApp [Eagle App<br/>localhost:41595]
+        end
+        subgraph MCPServer [MCP Server<br/>localhost:8000]
+        end
+    end
+
+    subgraph 192.168.1.xxx
+        subgraph MCPClient [MCP Client]
+        end
+    end
+
+    EagleApp ==> MCPServer e1@==> MCPClient
+    MCPClient e2@==> MCPServer ==> EagleApp
+    EagleApp ==> FileSystem
+    FileSystem ==> EagleApp
+
+    e1@{ animate: true }
+    e2@{ animate: true }
+```
+
+3) Other Network
+
+```mermaid
+flowchart LR
+
+    subgraph 192.168.1.100
+        subgraph FileSystem [File System]
+        end
+        subgraph EagleApp [Eagle App<br/>localhost:41595]
+        end
+    end
+
+    subgraph 192.168.1.101
+        subgraph MCPServer [MCP Server<br/>localhost:8000]
+        end
+    end
+
+    subgraph 192.168.1.xxx
+        subgraph MCPClient [MCP Client]
+        end
+    end
+
+    EagleApp ==> MCPServer e1@==> MCPClient
+    MCPClient e2@==> MCPServer ==> EagleApp
+    EagleApp ==> FileSystem
+    FileSystem ==> EagleApp
+
+    e1@{ animate: true }
+    e2@{ animate: true }
+```
