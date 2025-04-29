@@ -89,7 +89,7 @@ VS Code
 | [ ] | `get_library_icon`       | /api/library/icon          | Library     |
 | [ ] | ...                      | ...                        | ...         |
 
-> MCP Server API docs: http://localhost:8000/docs
+> MCP Server Backend API docs: http://localhost:8000/docs
 
 ## Use Cases
 
