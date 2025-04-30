@@ -10,6 +10,7 @@ A Model Context Protocol (MCP) server for Eagle.
 
 ## Requirements
 
+- Python 3.13
 - [uv](https://docs.astral.sh/uv/)
 
 ## Prerequisites
