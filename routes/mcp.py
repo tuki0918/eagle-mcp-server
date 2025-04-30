@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from schemas import ConnectResponse, ConnectSuccessResponse
+from schemas.mcp import ConnectResponse, ConnectSuccessResponse
 
 router = APIRouter(tags=["MCP"])
 
