@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Annotated, Dict, Optional, List, Literal, Union
-from schemas import SuccessResponse, ErrorResponse
+from schemas.api import SuccessResponse, ErrorResponse
 
 
 class AddBaseItem(BaseModel):

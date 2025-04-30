@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from schemas import CreateFolderRequest, RenameFolderRequest, UpdateFolderRequest
+from schemas.folder import CreateFolderRequest, RenameFolderRequest, UpdateFolderRequest
 from utils.eagle_api import eagle_api_get, eagle_api_post
 
 router = APIRouter(tags=["Folder"])

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from schemas import (
-    ErrorResponse,
+from schemas.api import ErrorResponse
+from schemas.item import (
     AddItemFromURLRequest,
     AddItemsFromURLsRequest,
     AddItemFromPathRequest,

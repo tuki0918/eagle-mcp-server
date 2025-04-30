@@ -1,6 +1,6 @@
 from pydantic import Field
 from typing import Annotated, Union
-from schemas import SuccessResponse, ErrorResponse
+from schemas.api import SuccessResponse, ErrorResponse
 
 
 class ConnectSuccessResponse(SuccessResponse):
