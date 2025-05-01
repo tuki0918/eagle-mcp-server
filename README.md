@@ -4,9 +4,30 @@
 
 A Model Context Protocol (MCP) server for Eagle.
 
-- Official Eagle API docs: https://api.eagle.cool/<br />
-- Changelog: https://api.eagle.cool/changelog<br />
-- Release Note: https://eagle.cool/blog/inside-eagle<br />
+<details>
+
+<summary>Supported file formats:</summary>
+
+- `JPG` / `JPEG`
+- `PNG`
+- `PDF`
+- `SVG`
+- `MP4`
+- `MP3`
+- `FBX`
+- `OBJ`
+- `EPS`
+- `TIF` / `TIFF`
+- `WebP`
+- `BMP`
+- `ICO`
+- `RAW`
+- etc
+
+</details>
+
+- Eagle: https://eagle.cool/<br />
+- Eagle API docs: https://api.eagle.cool/<br />
 
 ## Requirements
 
@@ -90,7 +111,7 @@ VS Code
 | [ ] | `get_library_icon`       | /api/library/icon          | Library     |
 | [ ] | ...                      | ...                        | ...         |
 
-> MCP Server Backend API docs: http://localhost:8000/docs
+> MCP Server API docs: http://localhost:8000/docs
 
 ## Use Cases
 
