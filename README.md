@@ -2,7 +2,7 @@
 
 ![](.github/docs/cover.png)
 
-A Model Context Protocol (MCP) server for Eagle.
+A Model Context Protocol (MCP) server for Eagle. [Wiki](https://github.com/tuki0918/eagle-mcp-server/wiki)
 
 <details>
 
