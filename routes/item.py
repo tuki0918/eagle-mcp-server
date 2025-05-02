@@ -24,7 +24,7 @@ router = APIRouter(tags=["Item"])
     "/api/item/addFromURL",
     operation_id="add_item_from_url",
     description=(
-        "Add an image from an address to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_urls`.\n\n"
+        "Add an image from a URL to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_urls`.\n\n"
         "More details: [https://api.eagle.cool/item/add-from-url](https://api.eagle.cool/item/add-from-url)"
     ),
 )
