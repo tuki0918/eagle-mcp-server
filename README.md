@@ -111,7 +111,8 @@ VS Code
 | [ ] | `get_library_icon`       | /api/library/icon          | Library     |
 | [ ] | ...                      | ...                        | ...         |
 
-> MCP Server API docs: http://localhost:8000/docs
+MCP Server API docs: https://tuki0918.github.io/eagle-mcp-server/
+- http://localhost:8000/redoc
 
 ## Use Cases
 
