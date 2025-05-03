@@ -23,6 +23,7 @@ mcp = FastApiMCP(
     app,
     name="Eagle MCP Server",
     description="An MCP server for Eagle",
+    exclude_tags=["Disabled"],
 )
 
 mcp.mount()

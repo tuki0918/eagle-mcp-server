@@ -24,6 +24,7 @@ async def create_folder(data: CreateFolderRequest):
     "/api/folder/rename",
     operation_id="rename_folder",
     description=("Rename the specified folder."),
+    tags=["Disabled"],
 )
 async def rename_folder(data: RenameFolderRequest):
     """
@@ -62,6 +63,7 @@ async def get_folder_list():
     "/api/folder/listRecent",
     operation_id="get_folder_list_recent",
     description=("Get the list of folders recently used by the user."),
+    tags=["Disabled"],
 )
 async def get_folder_list_recent():
     """

@@ -26,6 +26,7 @@ router = APIRouter(tags=["Item"])
     description=(
         "Add an image from a URL to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_urls`."
     ),
+    tags=["Disabled"],
 )
 async def add_item_from_url(data: AddItemFromURLRequest):
     """
@@ -39,6 +40,7 @@ async def add_item_from_url(data: AddItemFromURLRequest):
     "/api/item/addFromURLs",
     operation_id="add_items_from_urls",
     description=("Add multiple images from URLs to Eagle App."),
+    tags=["Disabled"],
 )
 async def add_items_from_urls(data: AddItemsFromURLsRequest):
     """
