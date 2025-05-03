@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from utils.eagle_api import eagle_api_get
+from schemas.library import SwitchLibraryRequest
+from utils.eagle_api import eagle_api_get, eagle_api_post
 
 router = APIRouter(tags=["Library"])
 
@@ -28,3 +29,16 @@ async def get_library_history():
     reference: https://api.eagle.cool/library/history
     """
     return await eagle_api_get("/api/library/history")
+
+
+@router.post(
+    "/api/library/switch",
+    operation_id="switch_library",
+    description=("Switch the library currently opened by Eagle."),
+)
+async def switch_library(data: SwitchLibraryRequest):
+    """
+    reference: https://api.eagle.cool/library/switch
+    """
+    payload = data.model_dump(exclude_none=True)
+    return await eagle_api_post("/api/library/switch", payload)
