@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from schemas.library import SwitchLibraryRequest
+from schemas.library import SwitchLibraryRequest, GetLibraryIconRequest
 from utils.eagle_api import eagle_api_get, eagle_api_post
 
 router = APIRouter(tags=["Library"])
@@ -42,3 +42,16 @@ async def switch_library(data: SwitchLibraryRequest):
     """
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_post("/api/library/switch", payload)
+
+
+@router.post(
+    "/api/library/icon",
+    operation_id="get_library_icon",
+    description=("Obtain the icon of the specified Library."),
+)
+async def get_library_icon(data: GetLibraryIconRequest):
+    """
+    reference: https://api.eagle.cool/library/icon
+    """
+    payload = data.model_dump(exclude_none=True)
+    return await eagle_api_get("/api/library/icon", payload)
