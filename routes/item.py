@@ -11,6 +11,7 @@ from schemas.item import (
     GetItemSourceRequest,
     MoveItemToTrashRequest,
     RefreshItemPaletteRequest,
+    RefreshItemThumbnailRequest,
     UpdateItemRequest,
     GetItemSourceResponse,
     GetItemSourceSuccessResponse,
@@ -152,6 +153,21 @@ async def refresh_item_palette(data: RefreshItemPaletteRequest):
     """
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_post("/api/item/refreshPalette", payload)
+
+
+@router.post(
+    "/api/item/refreshThumbnail",
+    operation_id="refresh_item_thumbnail",
+    description=(
+        "Re-generate the thumbnail of the file used to display in the List.  When changes to the original file were made, you can call this function to re-generate the thumbnail, the color analysis will also be made."
+    ),
+)
+async def refresh_item_thumbnail(data: RefreshItemThumbnailRequest):
+    """
+    reference: https://api.eagle.cool/item/refresh-thumbnail
+    """
+    payload = data.model_dump(exclude_none=True)
+    return await eagle_api_post("/api/item/refreshThumbnail", payload)
 
 
 @router.post(

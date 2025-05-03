@@ -192,6 +192,16 @@ class RefreshItemPaletteRequest(BaseModel):
     ]
 
 
+class RefreshItemThumbnailRequest(BaseModel):
+    id: Annotated[
+        str,
+        Field(
+            ...,
+            description="The item's ID",
+        ),
+    ]
+
+
 class UpdateItemRequest(BaseModel):
     id: Annotated[
         str,
