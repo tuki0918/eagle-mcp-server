@@ -70,6 +70,7 @@ async def add_item_from_path(data: AddItemFromPathRequest):
     "/api/item/addFromPaths",
     operation_id="add_items_from_paths",
     description=("Add multiple local files to Eagle App."),
+    tags=["Disabled"],
 )
 async def add_items_from_paths(data: AddItemsFromPathsRequest):
     """
