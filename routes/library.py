@@ -23,6 +23,7 @@ async def get_library_info():
     "/api/library/history",
     operation_id="get_library_history",
     description=("Get the list of libraries recently opened by the Application."),
+    tags=["Disabled"],
 )
 async def get_library_history():
     """
@@ -35,6 +36,7 @@ async def get_library_history():
     "/api/library/switch",
     operation_id="switch_library",
     description=("Switch the library currently opened by Eagle."),
+    tags=["Disabled"],
 )
 async def switch_library(data: SwitchLibraryRequest):
     """
@@ -48,6 +50,8 @@ async def switch_library(data: SwitchLibraryRequest):
     "/api/library/icon",
     operation_id="get_library_icon",
     description=("Obtain the icon of the specified Library."),
+    tags=["Disabled"],
+    deprecated=True,
 )
 async def get_library_icon(data: GetLibraryIconRequest):
     """
