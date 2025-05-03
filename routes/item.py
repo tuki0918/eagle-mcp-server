@@ -24,11 +24,13 @@ router = APIRouter(tags=["Item"])
     "/api/item/addFromURL",
     operation_id="add_item_from_url",
     description=(
-        "Add an image from a URL to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_urls`.\n\n"
-        "More details: [https://api.eagle.cool/item/add-from-url](https://api.eagle.cool/item/add-from-url)"
+        "Add an image from a URL to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_urls`."
     ),
 )
 async def add_item_from_url(data: AddItemFromURLRequest):
+    """
+    reference: https://api.eagle.cool/item/add-from-url
+    """
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_post("/api/item/addFromURL", payload)
 
@@ -36,12 +38,12 @@ async def add_item_from_url(data: AddItemFromURLRequest):
 @router.post(
     "/api/item/addFromURLs",
     operation_id="add_items_from_urls",
-    description=(
-        "Add multiple images from URLs to Eagle App.\n\n"
-        "More details: [https://api.eagle.cool/item/add-from-urls](https://api.eagle.cool/item/add-from-urls)"
-    ),
+    description=("Add multiple images from URLs to Eagle App."),
 )
 async def add_items_from_urls(data: AddItemsFromURLsRequest):
+    """
+    reference: https://api.eagle.cool/item/add-from-urls
+    """
     payload = data.model_dump(exclude_none=True)
     payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
     return await eagle_api_post("/api/item/addFromURLs", payload)
@@ -51,11 +53,13 @@ async def add_items_from_urls(data: AddItemsFromURLsRequest):
     "/api/item/addFromPath",
     operation_id="add_item_from_path",
     description=(
-        "Add a local file to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_paths`.\n\n"
-        "More details: [https://api.eagle.cool/item/add-from-path](https://api.eagle.cool/item/add-from-path)"
+        "Add a local file to Eagle App. If you intend to add multiple items in a row, we suggest you use `add_items_from_paths`."
     ),
 )
 async def add_item_from_path(data: AddItemFromPathRequest):
+    """
+    reference: https://api.eagle.cool/item/add-from-path
+    """
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_post("/api/item/addFromPath", payload)
 
@@ -63,12 +67,12 @@ async def add_item_from_path(data: AddItemFromPathRequest):
 @router.post(
     "/api/item/addFromPaths",
     operation_id="add_items_from_paths",
-    description=(
-        "Add multiple local files to Eagle App.\n\n"
-        "More details: [https://api.eagle.cool/item/add-from-paths](https://api.eagle.cool/item/add-from-paths)"
-    ),
+    description=("Add multiple local files to Eagle App."),
 )
 async def add_items_from_paths(data: AddItemsFromPathsRequest):
+    """
+    reference: https://api.eagle.cool/item/add-from-paths
+    """
     payload = data.model_dump(exclude_none=True)
     payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
     return await eagle_api_post("/api/item/addFromPaths", payload)
@@ -78,11 +82,13 @@ async def add_items_from_paths(data: AddItemsFromPathsRequest):
     "/api/item/info",
     operation_id="get_item_info",
     description=(
-        "Get Properties of the specified file, including the file name, tags, categorizations, folders, dimensions, etc.\n\n"
-        "More details: [https://api.eagle.cool/item/info](https://api.eagle.cool/item/info)"
+        "Get Properties of the specified file, including the file name, tags, categorizations, folders, dimensions, etc."
     ),
 )
 async def get_item_info(data: GetItemInfoRequest):
+    """
+    reference: https://api.eagle.cool/item/info
+    """
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_get("/api/item/info", payload)
 
@@ -91,11 +97,13 @@ async def get_item_info(data: GetItemInfoRequest):
     "/api/item/thumbnail",
     operation_id="get_item_thumbnail",
     description=(
-        "Get the path of the thumbnail of the file specified. If you would like to get a batch of thumbnail paths, the combination of Library path + Object IDis recommended.\n\n"
-        "More details: [https://api.eagle.cool/item/thumbnail](https://api.eagle.cool/item/thumbnail)"
+        "Get the path of the thumbnail of the file specified. If you would like to get a batch of thumbnail paths, the combination of Library path + Object IDis recommended."
     ),
 )
 async def get_item_thumbnail(data: GetItemThumbnailRequest):
+    """
+    reference: https://api.eagle.cool/item/thumbnail
+    """
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_get("/api/item/thumbnail", payload)
 
@@ -103,12 +111,12 @@ async def get_item_thumbnail(data: GetItemThumbnailRequest):
 @router.post(
     "/api/item/list",
     operation_id="get_item_list",
-    description=(
-        "Get items that match the filter condition.\n\n"
-        "More details: [https://api.eagle.cool/item/list](https://api.eagle.cool/item/list)"
-    ),
+    description=("Get items that match the filter condition."),
 )
 async def get_item_list(data: GetItemListRequest):
+    """
+    reference: https://api.eagle.cool/item/list
+    """
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_get("/api/item/list", payload)
 
@@ -116,12 +124,12 @@ async def get_item_list(data: GetItemListRequest):
 @router.post(
     "/api/item/moveToTrash",
     operation_id="move_item_to_trash",
-    description=(
-        "Move items to trash.\n\n"
-        "More details: [https://api.eagle.cool/item/api-item-movetotrash](https://api.eagle.cool/item/api-item-movetotrash)"
-    ),
+    description=("Move items to trash."),
 )
 async def move_item_to_trash(data: MoveItemToTrashRequest):
+    """
+    reference: https://api.eagle.cool/item/api-item-movetotrash
+    """
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_post("/api/item/moveToTrash", payload)
 
@@ -129,12 +137,12 @@ async def move_item_to_trash(data: MoveItemToTrashRequest):
 @router.post(
     "/api/item/update",
     operation_id="update_item",
-    description=(
-        "Modify data of specified fields of the item.\n\n"
-        "More details: [https://api.eagle.cool/item/update](https://api.eagle.cool/item/update)"
-    ),
+    description=("Modify data of specified fields of the item."),
 )
 async def update_item(data: UpdateItemRequest):
+    """
+    reference: https://api.eagle.cool/item/update
+    """
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_post("/api/item/update", payload)
 
