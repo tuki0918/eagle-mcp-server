@@ -16,3 +16,15 @@ async def get_library_info():
     reference: https://api.eagle.cool/library/info
     """
     return await eagle_api_get("/api/library/info")
+
+
+@router.get(
+    "/api/library/history",
+    operation_id="get_library_history",
+    description=("Get the list of libraries recently opened by the Application."),
+)
+async def get_library_history():
+    """
+    reference: https://api.eagle.cool/library/history
+    """
+    return await eagle_api_get("/api/library/history")
