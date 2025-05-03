@@ -10,6 +10,7 @@ from schemas.item import (
     GetItemListRequest,
     GetItemSourceRequest,
     MoveItemToTrashRequest,
+    RefreshItemPaletteRequest,
     UpdateItemRequest,
     GetItemSourceResponse,
     GetItemSourceSuccessResponse,
@@ -136,6 +137,21 @@ async def move_item_to_trash(data: MoveItemToTrashRequest):
     """
     payload = data.model_dump(exclude_none=True)
     return await eagle_api_post("/api/item/moveToTrash", payload)
+
+
+@router.post(
+    "/api/item/refreshPalette",
+    operation_id="refresh_item_palette",
+    description=(
+        "Re-analysis the color of the file. When changes to the original file were made, you can call this function to refresh the Color Analysis."
+    ),
+)
+async def refresh_item_palette(data: RefreshItemPaletteRequest):
+    """
+    reference: https://api.eagle.cool/item/refresh-palette
+    """
+    payload = data.model_dump(exclude_none=True)
+    return await eagle_api_post("/api/item/refreshPalette", payload)
 
 
 @router.post(
