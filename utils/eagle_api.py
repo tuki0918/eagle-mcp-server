@@ -2,6 +2,7 @@ from typing import Literal
 import httpx
 import os
 import logging
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +41,21 @@ async def request_to_eagle_api(
         return {
             "status": "error",
             "message": f"HTTP error occurred: {exc.response.status_code}",
+        }
+    except json.JSONDecodeError as exc:
+        logger.error(f"JSON decode error occurred: {exc}, Response: {response.text}")
+        response_text = response.text
+        if len(response_text) > 100:
+            response_text = f"{response_text[:100]}..."
+        return {
+            "status": "error",
+            "message": f"Invalid JSON response: {response_text}",
+        }
+    except Exception as exc:
+        logger.error(f"Unexpected error occurred: {exc}")
+        return {
+            "status": "error",
+            "message": "An unexpected error occurred",
         }
 
 
