@@ -102,8 +102,8 @@ VS Code
 | ✅ | `get_item_thumbnail`     | /api/item/thumbnail        |  | Item        |
 | ✅ | `get_item_list`          | /api/item/list             | ⚫︎ | Item        |
 | ✅ | `move_item_to_trash`     | /api/item/moveToTrash      | ⚫︎ | Item        |
-| [ ] | `refresh_item_palette`   | /api/item/refreshPalette   | ⚫︎ | Item        |
-| [ ] | `refresh_item_thumbnail` | /api/item/refreshThumbnail | ⚫︎ | Item        |
+| ✅ | `refresh_item_palette`   | /api/item/refreshPalette   |  | Item        |
+| ✅ | `refresh_item_thumbnail` | /api/item/refreshThumbnail |  | Item        |
 | ✅ | `update_item`            | /api/item/update           | ⚫︎ | Item        |
 | ✅ | `get_library_info`       | /api/library/info          | ⚫︎ | Library     |
 | ✅ | `get_library_history`    | /api/library/history       |  | Library     |

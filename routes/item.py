@@ -146,6 +146,7 @@ async def move_item_to_trash(data: MoveItemToTrashRequest):
     description=(
         "Re-analysis the color of the file. When changes to the original file were made, you can call this function to refresh the Color Analysis."
     ),
+    tags=["Disabled"],
 )
 async def refresh_item_palette(data: RefreshItemPaletteRequest):
     """
@@ -161,6 +162,7 @@ async def refresh_item_palette(data: RefreshItemPaletteRequest):
     description=(
         "Re-generate the thumbnail of the file used to display in the List.  When changes to the original file were made, you can call this function to re-generate the thumbnail, the color analysis will also be made."
     ),
+    tags=["Disabled"],
 )
 async def refresh_item_thumbnail(data: RefreshItemThumbnailRequest):
     """
