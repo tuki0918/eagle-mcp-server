@@ -83,33 +83,33 @@ VS Code
 
 ## Tools
 
-|  __  | Operation ID             | API endpoint               | Category    |
-|:----:|:-------------------------|:---------------------------|:------------|
-| ✅ | `connect`                | /api/connect               | MCP         |
-| ✅ | `get_application_info`   | /api/application/info      | Application |
-| ✅ | `create_folder`          | /api/folder/create         | Folder      |
-| ✅ | `rename_folder`          | /api/folder/rename         | Folder      |
-| ✅ | `update_folder`          | /api/folder/update         | Folder      |
-| ✅ | `get_folder_list`        | /api/folder/list           | Folder      |
-| ✅ | `get_folder_list_recent` | /api/folder/listRecent     | Folder      |
-| ✅ | `add_item_from_url`      | /api/item/addFromURL       | Item        |
-| ✅ | `add_items_from_urls`    | /api/item/addFromURLs      | Item        |
-| ✅ | `add_item_from_path`     | /api/item/addFromPath      | Item        |
-| ✅ | `add_items_from_paths`   | /api/item/addFromPaths     | Item        |
-| [ ] | `add_bookmark`           | /api/item/addBookmark      | Item        |
-| ✅ | `get_item_info`          | /api/item/info             | Item        |
-| ✅ | `get_item_source`        | /api/item/source           | Item        |
-| ✅ | `get_item_thumbnail`     | /api/item/thumbnail        | Item        |
-| ✅ | `get_item_list`          | /api/item/list             | Item        |
-| ✅ | `move_item_to_trash`     | /api/item/moveToTrash      | Item        |
-| [ ] | `refresh_item_palette`   | /api/item/refreshPalette   | Item        |
-| [ ] | `refresh_item_thumbnail` | /api/item/refreshThumbnail | Item        |
-| ✅ | `update_item`            | /api/item/update           | Item        |
-| ✅ | `get_library_info`       | /api/library/info          | Library     |
-| [ ] | `get_library_history`    | /api/library/history       | Library     |
-| [ ] | `switch_library`         | /api/library/switch        | Library     |
-| [ ] | `get_library_icon`       | /api/library/icon          | Library     |
-| [ ] | ...                      | ...                        | ...         |
+| Supported | Operation ID             | API endpoint               | Disabled | Category    |
+|:----:|:-------------------------|:---------------------------|:----:|:------------|
+| ✅ | `connect`                | /api/connect               | ⚫︎ | MCP         |
+| ✅ | `get_application_info`   | /api/application/info      | _ | Application |
+| ✅ | `create_folder`          | /api/folder/create         | _ | Folder      |
+| ✅ | `rename_folder`          | /api/folder/rename         | ⚫︎ | Folder      |
+| ✅ | `update_folder`          | /api/folder/update         | _ | Folder      |
+| ✅ | `get_folder_list`        | /api/folder/list           | _ | Folder      |
+| ✅ | `get_folder_list_recent` | /api/folder/listRecent     | ⚫︎ | Folder      |
+| ✅ | `add_item_from_url`      | /api/item/addFromURL       | ⚫︎ | Item        |
+| ✅ | `add_items_from_urls`    | /api/item/addFromURLs      | ⚫︎ | Item        |
+| ✅ | `add_item_from_path`     | /api/item/addFromPath      | _ | Item        |
+| ✅ | `add_items_from_paths`   | /api/item/addFromPaths     | _ | Item        |
+| [ ] | `add_bookmark`           | /api/item/addBookmark      | _ | Item        |
+| ✅ | `get_item_info`          | /api/item/info             | _ | Item        |
+| ✅ | `get_item_source`        | /api/item/source           | _ | Item        |
+| ✅ | `get_item_thumbnail`     | /api/item/thumbnail        | _ | Item        |
+| ✅ | `get_item_list`          | /api/item/list             | _ | Item        |
+| ✅ | `move_item_to_trash`     | /api/item/moveToTrash      | _ | Item        |
+| [ ] | `refresh_item_palette`   | /api/item/refreshPalette   | _ | Item        |
+| [ ] | `refresh_item_thumbnail` | /api/item/refreshThumbnail | _ | Item        |
+| ✅ | `update_item`            | /api/item/update           | _ | Item        |
+| ✅ | `get_library_info`       | /api/library/info          | _ | Library     |
+| [ ] | `get_library_history`    | /api/library/history       | _ | Library     |
+| [ ] | `switch_library`         | /api/library/switch        | _ | Library     |
+| [ ] | `get_library_icon`       | /api/library/icon          | _ | Library     |
+| [ ] | ...                      | ...                        | _ | ...         |
 
 MCP Server API docs: https://tuki0918.github.io/eagle-mcp-server/
 - http://localhost:8000/redoc
