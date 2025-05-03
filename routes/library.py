@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Response
 from schemas.library import SwitchLibraryRequest, GetLibraryIconRequest
 from utils.eagle_api import eagle_api_get, eagle_api_post
 
@@ -54,4 +54,10 @@ async def get_library_icon(data: GetLibraryIconRequest):
     reference: https://api.eagle.cool/library/icon
     """
     payload = data.model_dump(exclude_none=True)
-    return await eagle_api_get("/api/library/icon", payload)
+    result = await eagle_api_get("/api/library/icon", payload, is_binary=True)
+
+    if isinstance(result, dict) and result.get("status") == "error":
+        return result
+
+    content, content_type = result
+    return Response(content=content, media_type=content_type)

@@ -15,7 +15,7 @@ async def request_to_eagle_api(
     params: dict = None,
     payload: dict = None,
     is_binary: bool = False,
-) -> Union[dict, bytes]:
+) -> Union[dict, tuple[bytes, str]]:
     url = f"{EAGLE_API_BASE_URL}{endpoint}"
     try:
         async with httpx.AsyncClient() as client:
@@ -32,7 +32,8 @@ async def request_to_eagle_api(
             response.raise_for_status()
 
             if is_binary:
-                return response.content
+                content_type = response.headers.get("Content-Type", "image/png")
+                return response.content, content_type
 
             return response.json()
     except httpx.RequestError as exc:
