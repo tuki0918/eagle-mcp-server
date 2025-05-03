@@ -101,6 +101,7 @@ async def get_item_info(data: GetItemInfoRequest):
     description=(
         "Get the path of the thumbnail of the file specified. If you would like to get a batch of thumbnail paths, the combination of Library path + Object IDis recommended."
     ),
+    tags=["Disabled"],
 )
 async def get_item_thumbnail(data: GetItemThumbnailRequest):
     """
