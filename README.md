@@ -117,7 +117,7 @@ MCP Server API docs:
 
 ## Use Cases
 
-1) Same Host (Recommended)
+### 1) Same Host (Recommended)
 
 ```mermaid
 flowchart LR
@@ -147,7 +147,7 @@ flowchart LR
 > [!TIP]
 > You have direct access to the filesystem.
 
-2) Same Host (Eagle App, MCP Server) + Other Host (MCP Client)
+### 2) Same Host (Eagle App, MCP Server) + Other Host (MCP Client)
 
 ```mermaid
 flowchart LR
@@ -178,7 +178,7 @@ flowchart LR
 > [!WARNING]
 > You don't have access to the filesystem.
 
-3) Other Host
+### 3) Other Host
 
 ```mermaid
 flowchart LR
