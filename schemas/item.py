@@ -199,6 +199,7 @@ class UpdateItemRequest(BaseModel):
         Optional[int], Field(None, ge=0, le=5, description="Optional, ratings")
     ]
     # NOTE: APIのドキュメントに項目が無く、API経由での更新できない
+    # name: ...
     # folders: ...
 
 
