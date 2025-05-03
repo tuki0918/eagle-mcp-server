@@ -83,7 +83,7 @@ VS Code
 
 ## Tools
 
-| Supported | Operation ID             | API endpoint               | Disabled | Category    |
+| Supported | Operation ID             | API endpoint               | Disabled (default) | Category    |
 |:----:|:-------------------------|:---------------------------|:----:|:------------|
 | ✅ | `connect`                | /api/connect               | ⚫︎ | MCP         |
 | ✅ | `get_application_info`   | /api/application/info      | _ | Application |
@@ -99,7 +99,7 @@ VS Code
 | [ ] | `add_bookmark`           | /api/item/addBookmark      | _ | Item        |
 | ✅ | `get_item_info`          | /api/item/info             | _ | Item        |
 | ✅ | `get_item_source`        | /api/item/source           | _ | Item        |
-| ✅ | `get_item_thumbnail`     | /api/item/thumbnail        | _ | Item        |
+| ✅ | `get_item_thumbnail`     | /api/item/thumbnail        | ⚫︎ | Item        |
 | ✅ | `get_item_list`          | /api/item/list             | _ | Item        |
 | ✅ | `move_item_to_trash`     | /api/item/moveToTrash      | _ | Item        |
 | [ ] | `refresh_item_palette`   | /api/item/refreshPalette   | _ | Item        |
@@ -111,7 +111,8 @@ VS Code
 | [ ] | `get_library_icon`       | /api/library/icon          | _ | Library     |
 | [ ] | ...                      | ...                        | _ | ...         |
 
-MCP Server API docs: https://tuki0918.github.io/eagle-mcp-server/
+MCP Server API docs: 
+- https://tuki0918.github.io/eagle-mcp-server/
 - http://localhost:8000/redoc
 
 ## Use Cases
