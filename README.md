@@ -106,9 +106,9 @@ VS Code
 | [ ] | `refresh_item_thumbnail` | /api/item/refreshThumbnail | _ | Item        |
 | ✅ | `update_item`            | /api/item/update           | _ | Item        |
 | ✅ | `get_library_info`       | /api/library/info          | _ | Library     |
-| [ ] | `get_library_history`    | /api/library/history       | _ | Library     |
-| [ ] | `switch_library`         | /api/library/switch        | _ | Library     |
-| [ ] | `get_library_icon`       | /api/library/icon          | _ | Library     |
+| ✅ | `get_library_history`    | /api/library/history       | ⚫︎ | Library     |
+| ✅ | `switch_library`         | /api/library/switch        | ⚫︎ | Library     |
+| ✅ | `get_library_icon`       | /api/library/icon          | ⚫︎ | Library     |
 | [ ] | ...                      | ...                        | _ | ...         |
 
 MCP Server API docs: 
