@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Union
 import httpx
 import os
 import logging
@@ -14,7 +14,8 @@ async def request_to_eagle_api(
     endpoint: str,
     params: dict = None,
     payload: dict = None,
-):
+    is_binary: bool = False,
+) -> Union[dict, bytes]:
     url = f"{EAGLE_API_BASE_URL}{endpoint}"
     try:
         async with httpx.AsyncClient() as client:
@@ -29,6 +30,10 @@ async def request_to_eagle_api(
                 }
 
             response.raise_for_status()
+
+            if is_binary:
+                return response.content
+
             return response.json()
     except httpx.RequestError as exc:
         logger.error(f"Request error occurred: {exc}")
@@ -59,9 +64,13 @@ async def request_to_eagle_api(
         }
 
 
-async def eagle_api_get(endpoint: str, params: dict = None):
-    return await request_to_eagle_api("GET", endpoint, params=params)
+async def eagle_api_get(endpoint: str, params: dict = None, is_binary: bool = False):
+    return await request_to_eagle_api(
+        "GET", endpoint, params=params, is_binary=is_binary
+    )
 
 
-async def eagle_api_post(endpoint: str, payload: dict):
-    return await request_to_eagle_api("POST", endpoint, payload=payload)
+async def eagle_api_post(endpoint: str, payload: dict, is_binary: bool = False):
+    return await request_to_eagle_api(
+        "POST", endpoint, payload=payload, is_binary=is_binary
+    )
