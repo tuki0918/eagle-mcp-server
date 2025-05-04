@@ -106,6 +106,46 @@ class AddItemsFromPathsRequest(BaseModel):
     ]
 
 
+class AddBookmarkRequest(BaseModel):
+    url: Annotated[
+        str,
+        Field(
+            ...,
+            description="Required, the link of the image to be saved. Supports `http`, `https`, `base64`",
+        ),
+    ]
+    # NOTE: base64が指定されていない場合は、URL遷移先のページのタイトルが反映される
+    name: Annotated[
+        str,
+        Field(..., description="Required, the name of the image to be added."),
+    ]
+    # NOTE: 未指定の場合はURL遷移先のページのスクリーンショットが反映される
+    base64: Annotated[
+        Optional[str],
+        Field(
+            None, description="The thumbnail of the bookmark. Must be in base64 format."
+        ),
+    ]
+    tags: Annotated[
+        Optional[List[str]],
+        Field(None, description="Tags for the image"),
+    ]
+    modificationTime: Annotated[
+        Optional[int],
+        Field(
+            None,
+            description="The creation date (ms) of the images. The parameter can be used to alter the images' sorting order in Eagle.",
+        ),
+    ]
+    folderId: Annotated[
+        Optional[str],
+        Field(
+            None,
+            description="If this parameter is defined, the image will be added to the corresponding folder.",
+        ),
+    ]
+
+
 class GetItemInfoRequest(BaseModel):
     id: Annotated[
         str,

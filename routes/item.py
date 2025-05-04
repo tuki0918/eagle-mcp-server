@@ -5,6 +5,7 @@ from schemas.item import (
     AddItemsFromURLsRequest,
     AddItemFromPathRequest,
     AddItemsFromPathsRequest,
+    AddBookmarkRequest,
     GetItemInfoRequest,
     GetItemThumbnailRequest,
     GetItemListRequest,
@@ -81,6 +82,20 @@ async def add_items_from_paths(data: AddItemsFromPathsRequest):
     payload = data.model_dump(exclude_none=True)
     payload["items"] = [item.model_dump(exclude_none=True) for item in data.items]
     return await eagle_api_post("/api/item/addFromPaths", payload)
+
+
+@router.post(
+    "/api/item/addBookmark",
+    operation_id="add_bookmark",
+    description=("Save the link in the URL form to Eagle App."),
+    tags=["Disabled"],
+)
+async def add_bookmark(data: AddBookmarkRequest):
+    """
+    reference: https://api.eagle.cool/item/add-bookmark
+    """
+    payload = data.model_dump(exclude_none=True)
+    return await eagle_api_post("/api/item/addBookmark", payload)
 
 
 @router.post(
