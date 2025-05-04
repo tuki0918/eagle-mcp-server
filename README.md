@@ -96,7 +96,7 @@ VS Code
 | ✅ | `add_items_from_urls`    | /api/item/addFromURLs      |  | Item        |
 | ✅ | `add_item_from_path`     | /api/item/addFromPath      | ⚫︎ | Item        |
 | ✅ | `add_items_from_paths`   | /api/item/addFromPaths     |  | Item        |
-| [ ] | `add_bookmark`           | /api/item/addBookmark      | ⚫︎ | Item        |
+| ✅ | `add_bookmark`           | /api/item/addBookmark      |  | Item        |
 | ✅ | `get_item_info`          | /api/item/info             | ⚫︎ | Item        |
 | ✅ | `get_item_source`        | /api/item/source           | ⚫︎ | Item        |
 | ✅ | `get_item_thumbnail`     | /api/item/thumbnail        |  | Item        |
