@@ -1,34 +1,26 @@
-from fastapi import FastAPI
-from fastapi_mcp import FastApiMCP
-from routes import (
-    mcp_router,
-    application_router,
-    folder_router,
-    item_router,
-    library_router,
-)
+from fastmcp import MCPServer
+from resources.library import LibraryResource
+from resources.item import ItemResource
+from resources.folder import FolderResource
+from resources.application import ApplicationResource
+from resources.mcp import MCPResource
 
-app = FastAPI(
-    title="Eagle MCP API",
-)
 
-# Register routers
-app.include_router(mcp_router)
-app.include_router(application_router)
-app.include_router(folder_router)
-app.include_router(item_router)
-app.include_router(library_router)
+def main():
+    server = MCPServer(
+        name="Eagle MCP Server",
+        description="An MCP server for Eagle",
+        transport="stdio",  # stdioトランスポートで起動
+    )
 
-mcp = FastApiMCP(
-    app,
-    name="Eagle MCP Server",
-    description="An MCP server for Eagle",
-    exclude_tags=["Disabled"],
-)
+    server.add_resource(MCPResource())
+    server.add_resource(LibraryResource())
+    server.add_resource(ItemResource())
+    server.add_resource(FolderResource())
+    server.add_resource(ApplicationResource())
 
-mcp.mount()
+    server.run()
+
 
 if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    main()
