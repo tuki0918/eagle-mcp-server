@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/tuki0918-eagle-mcp-server-badge.png)](https://mseep.ai/app/tuki0918-eagle-mcp-server)
+
 # Eagle MCP Server (Unofficial)
 
 ![](.github/docs/cover.png)
