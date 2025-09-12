@@ -4,6 +4,8 @@
 
 A Model Context Protocol (MCP) server for Eagle. [Wiki](https://github.com/tuki0918/eagle-mcp-server/wiki)
 
+**Now using FastMCP 2.0 with stdio transport for better local usage!**
+
 <details>
 
 <summary>Supported file formats:</summary>
@@ -53,71 +55,65 @@ uv run main.py
 # EAGLE_API_BASE_URL=http://localhost:12345 uv run main.py
 ```
 
+## Connecting to the MCP Server using stdio
 
-## Connecting to the MCP Server using SSE
+All the most popular MCP clients (Claude Desktop, Cursor & Windsurf) use the following config format for stdio transport:
 
-All the most popular MCP clients (Claude Desktop, Cursor & Windsurf) use the following config format:
-
-```
+```json
 {
   "mcpServers": {
     "eagle-mcp-server": {
-      "url": "http://localhost:8000/mcp"
+      "command": "uv",
+      "args": ["run", "main.py"],
+      "cwd": "/path/to/eagle-mcp-server"
     }
   }
 }
 ```
 
-VS Code
+VS Code:
 
-```
-"mcp": {
+```json
+{
+  "mcp": {
     "servers": {
-        "eagle-mcp-server": {
-            "type": "sse",
-            "url": "http://localhost:8000/mcp"
-        }
+      "eagle-mcp-server": {
+        "type": "stdio",
+        "command": "uv",
+        "args": ["run", "main.py"],
+        "cwd": "/path/to/eagle-mcp-server"
+      }
     }
+  }
 }
 ```
 
 ## Tools
 
-| Supported | Operation ID             | API endpoint               | Enabled (default) | Category    |
-|:----:|:-------------------------|:---------------------------|:----:|:------------|
-| ✅ | `connect`                | /api/connect               |  | MCP         |
-| ✅ | `get_application_info`   | /api/application/info      | ⚫︎ | Application |
-| ✅ | `create_folder`          | /api/folder/create         | ⚫︎ | Folder      |
-| ✅ | `rename_folder`          | /api/folder/rename         |  | Folder      |
-| ✅ | `update_folder`          | /api/folder/update         | ⚫︎ | Folder      |
-| ✅ | `get_folder_list`        | /api/folder/list           | ⚫︎ | Folder      |
-| ✅ | `get_folder_list_recent` | /api/folder/listRecent     |  | Folder      |
-| ✅ | `add_item_from_url`      | /api/item/addFromURL       |  | Item        |
-| ✅ | `add_items_from_urls`    | /api/item/addFromURLs      |  | Item        |
-| ✅ | `add_item_from_path`     | /api/item/addFromPath      | ⚫︎ | Item        |
-| ✅ | `add_items_from_paths`   | /api/item/addFromPaths     |  | Item        |
-| ✅ | `add_bookmark`           | /api/item/addBookmark      |  | Item        |
-| ✅ | `get_item_info`          | /api/item/info             | ⚫︎ | Item        |
-| ✅ | `get_item_source`        | /api/item/source           | ⚫︎ | Item        |
-| ✅ | `get_item_thumbnail`     | /api/item/thumbnail        |  | Item        |
-| ✅ | `get_item_list`          | /api/item/list             | ⚫︎ | Item        |
-| ✅ | `move_item_to_trash`     | /api/item/moveToTrash      | ⚫︎ | Item        |
-| ✅ | `refresh_item_palette`   | /api/item/refreshPalette   |  | Item        |
-| ✅ | `refresh_item_thumbnail` | /api/item/refreshThumbnail |  | Item        |
-| ✅ | `update_item`            | /api/item/update           | ⚫︎ | Item        |
-| ✅ | `get_library_info`       | /api/library/info          | ⚫︎ | Library     |
-| ✅ | `get_library_history`    | /api/library/history       |  | Library     |
-| ✅ | `switch_library`         | /api/library/switch        |  | Library     |
-| ✅ | `get_library_icon`       | /api/library/icon          |  | Library     |
-| [ ] | ...                      | ...                        |  | ...         |
+## Tools
 
-MCP Server API docs: 
-- https://tuki0918.github.io/eagle-mcp-server/
-- http://localhost:8000/redoc
+| Tool Name                    | Description                                               | Category    |
+|:-----------------------------|:----------------------------------------------------------|:------------|
+| `connect`                    | Connect to Eagle MCP Server                              | MCP         |
+| `get_application_info`       | Get detailed information on the Eagle App currently running | Application |
+| `create_folder`              | Create a folder in the current library                   | Folder      |
+| `update_folder`              | Update the specified folder (name, description, color)   | Folder      |
+| `get_folder_list`            | Get the list of folders of the current library           | Folder      |
+| `add_item_from_path`         | Add an image from a local file path to Eagle App         | Item        |
+| `get_item_info`              | Get detailed information about a specific item           | Item        |
+| `get_item_source`            | Get the source file information for a specific item      | Item        |
+| `get_item_list`              | Get a list of items from the current library             | Item        |
+| `move_item_to_trash`         | Move an item to trash                                     | Item        |
+| `update_item`                | Update an item's metadata (name, tags, annotation, etc.) | Item        |
+| `get_library_info`           | Get information about the current library                | Library     |
+
+All tools are enabled by default and use Eagle's native API endpoints.
+
+**Note:** This version uses stdio transport instead of HTTP/SSE for better local usage and MCP client compatibility.
 
 ## Use Cases
 
-### 1) Same Host (Recommended)
+### Recommended Setup: Local Usage with stdio transport
 
 ```mermaid
 flowchart LR
@@ -129,85 +125,25 @@ flowchart LR
         end
         subgraph EagleApp [Eagle App<br/>localhost:41595]
         end
-        subgraph MCPServer [MCP Server<br/>localhost:8000]
-        end
-        subgraph MCPClient [MCP Client]
+        subgraph MCPClient [MCP Client<br/>stdio transport]
         end
     end
 
-    EagleApp ==> MCPServer e1@==> MCPClient
-    MCPClient e2@==> MCPServer ==> EagleApp
+    EagleApp ==> MCPClient
+    MCPClient e1@==> EagleApp
     EagleApp ==> FileSystem
     FileSystem ==> EagleApp
 
     e1@{ animate: true }
-    e2@{ animate: true }
 ```
 
 > [!TIP]
-> You have direct access to the filesystem.
+> This setup uses stdio transport which is the recommended approach for MCP clients.
+> You have direct access to the filesystem and Eagle App on the same machine.
 
-### 2) Same Host (Eagle App, MCP Server) + Other Host (MCP Client)
-
-```mermaid
-flowchart LR
-  
-    subgraph 192.168.1.100
-        subgraph FileSystem [File System]
-        end
-        subgraph EagleApp [Eagle App<br/>localhost:41595]
-        end
-        subgraph MCPServer [MCP Server<br/>localhost:8000]
-        end
-    end
-
-    subgraph 192.168.1.xxx
-        subgraph MCPClient [MCP Client]
-        end
-    end
-
-    EagleApp ==> MCPServer e1@==> MCPClient
-    MCPClient e2@==> MCPServer ==> EagleApp
-    EagleApp ==> FileSystem
-    FileSystem ==> EagleApp
-
-    e1@{ animate: true }
-    e2@{ animate: true }
-```
-
-> [!WARNING]
-> You don't have access to the filesystem.
-
-### 3) Other Host
-
-```mermaid
-flowchart LR
-
-    subgraph 192.168.1.100
-        subgraph FileSystem [File System]
-        end
-        subgraph EagleApp [Eagle App<br/>localhost:41595]
-        end
-    end
-
-    subgraph 192.168.1.101
-        subgraph MCPServer [MCP Server<br/>localhost:8000]
-        end
-    end
-
-    subgraph 192.168.1.xxx
-        subgraph MCPClient [MCP Client]
-        end
-    end
-
-    EagleApp ==> MCPServer e1@==> MCPClient
-    MCPClient e2@==> MCPServer ==> EagleApp
-    EagleApp ==> FileSystem
-    FileSystem ==> EagleApp
-
-    e1@{ animate: true }
-    e2@{ animate: true }
-```
-
-> [!WARNING]
-> You don't have access to the filesystem.
+**Benefits:**
+- Direct stdio communication (no HTTP server needed)
+- Better security (no network exposure)
+- Faster communication
+- Native MCP protocol support
+- Easy to configure in MCP clients
