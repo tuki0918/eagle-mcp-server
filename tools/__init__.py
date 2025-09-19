@@ -1,1 +1,0 @@
-# Tools module for Eagle MCP Server
