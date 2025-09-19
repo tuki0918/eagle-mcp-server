@@ -5,6 +5,6 @@ description = "An MCP server for Eagle"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "fastapi-mcp>=0.3.3",
+    "fastmcp>=0.6.0",
     "httpx>=0.28.1",
 ]
