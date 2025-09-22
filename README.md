@@ -1,8 +1,11 @@
 # Eagle MCP Server (Unofficial)
 
+> [!NOTE]
+> [Official MCP support is planned for Eagle v5 (public beta in Q1 2026)](https://eagle.cool/blog/post/eagle5-teaser)
+
 ![](.github/docs/cover.png)
 
-A Model Context Protocol (MCP) server for Eagle. [Wiki](https://github.com/tuki0918/eagle-mcp-server/wiki)
+A Model Context Protocol (MCP) server for Eagle.
 
 <details>
 
