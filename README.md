@@ -101,6 +101,16 @@ MCP Server API docs:
 - https://tuki0918.github.io/eagle-mcp-server/
 - http://localhost:8000/redoc
 
+## Enabling Disabled Tools
+
+Some tools are disabled by default (shown as empty cells in the "Enabled (default)" column above). To enable these disabled tools:
+
+1. Locate the tool definition in the source code
+2. Remove the `tags=["Disabled"]` line from the tool configuration
+3. Restart the MCP server
+
+This will make the previously disabled tools available for use.
+
 ## Use Cases
 
 ### 1) Same Host (Recommended)
