@@ -54,9 +54,9 @@ uv run main.py
 ```
 
 
-## Connecting to the MCP Server using SSE
+## Connecting to the MCP Server using Streamable HTTP
 
-All the most popular MCP clients (Claude Desktop, Cursor & Windsurf) use the following config format:
+Example config:
 
 ```
 {
@@ -68,48 +68,34 @@ All the most popular MCP clients (Claude Desktop, Cursor & Windsurf) use the fol
 }
 ```
 
-VS Code
-
-```
-"mcp": {
-    "servers": {
-        "eagle-mcp-server": {
-            "type": "sse",
-            "url": "http://localhost:8000/mcp"
-        }
-    }
-}
-```
-
 ## Tools
 
-| Supported | Operation ID             | API endpoint               | Enabled (default) | Category    |
-|:----:|:-------------------------|:---------------------------|:----:|:------------|
-| ✅ | `connect`                | /api/connect               |  | MCP         |
-| ✅ | `get_application_info`   | /api/application/info      | ⚫︎ | Application |
-| ✅ | `create_folder`          | /api/folder/create         | ⚫︎ | Folder      |
-| ✅ | `rename_folder`          | /api/folder/rename         |  | Folder      |
-| ✅ | `update_folder`          | /api/folder/update         | ⚫︎ | Folder      |
-| ✅ | `get_folder_list`        | /api/folder/list           | ⚫︎ | Folder      |
-| ✅ | `get_folder_list_recent` | /api/folder/listRecent     |  | Folder      |
-| ✅ | `add_item_from_url`      | /api/item/addFromURL       |  | Item        |
-| ✅ | `add_items_from_urls`    | /api/item/addFromURLs      |  | Item        |
-| ✅ | `add_item_from_path`     | /api/item/addFromPath      | ⚫︎ | Item        |
-| ✅ | `add_items_from_paths`   | /api/item/addFromPaths     |  | Item        |
-| ✅ | `add_bookmark`           | /api/item/addBookmark      |  | Item        |
-| ✅ | `get_item_info`          | /api/item/info             | ⚫︎ | Item        |
-| ✅ | `get_item_source`        | /api/item/source           | ⚫︎ | Item        |
-| ✅ | `get_item_thumbnail`     | /api/item/thumbnail        |  | Item        |
-| ✅ | `get_item_list`          | /api/item/list             | ⚫︎ | Item        |
-| ✅ | `move_item_to_trash`     | /api/item/moveToTrash      | ⚫︎ | Item        |
-| ✅ | `refresh_item_palette`   | /api/item/refreshPalette   |  | Item        |
-| ✅ | `refresh_item_thumbnail` | /api/item/refreshThumbnail |  | Item        |
-| ✅ | `update_item`            | /api/item/update           | ⚫︎ | Item        |
-| ✅ | `get_library_info`       | /api/library/info          | ⚫︎ | Library     |
-| ✅ | `get_library_history`    | /api/library/history       |  | Library     |
-| ✅ | `switch_library`         | /api/library/switch        |  | Library     |
-| ✅ | `get_library_icon`       | /api/library/icon          |  | Library     |
-| [ ] | ...                      | ...                        |  | ...         |
+| Supported | Eagle API endpoint | Operation ID | Enabled (default) | Category |
+|:----:|:---------------------------|:-------------------------|:----:|:------------|
+| ✅ | -               | `connect`                |  | MCP         |
+| ✅ | /api/application/info      | `get_application_info`   | ⚫︎ | Application |
+| ✅ | /api/folder/create         | `create_folder`          | ⚫︎ | Folder      |
+| ✅ | /api/folder/rename         | `rename_folder`          |  | Folder      |
+| ✅ | /api/folder/update         | `update_folder`          | ⚫︎ | Folder      |
+| ✅ | /api/folder/list           | `get_folder_list`        | ⚫︎ | Folder      |
+| ✅ | /api/folder/listRecent     | `get_folder_list_recent` |  | Folder      |
+| ✅ | /api/item/addFromURL       | `add_item_from_url`      |  | Item        |
+| ✅ | /api/item/addFromURLs      | `add_items_from_urls`    |  | Item        |
+| ✅ | /api/item/addFromPath      | `add_item_from_path`     | ⚫︎ | Item        |
+| ✅ | /api/item/addFromPaths     | `add_items_from_paths`   |  | Item        |
+| ✅ | /api/item/addBookmark      | `add_bookmark`           |  | Item        |
+| ✅ | /api/item/info             | `get_item_info`          | ⚫︎ | Item        |
+| ✅ | -           | `get_item_source`        | ⚫︎ | Item        |
+| ✅ | /api/item/thumbnail        | `get_item_thumbnail`     |  | Item        |
+| ✅ | /api/item/list             | `get_item_list`          | ⚫︎ | Item        |
+| ✅ | /api/item/moveToTrash      | `move_item_to_trash`     | ⚫︎ | Item        |
+| ✅ | /api/item/refreshPalette   | `refresh_item_palette`   |  | Item        |
+| ✅ | /api/item/refreshThumbnail | `refresh_item_thumbnail` |  | Item        |
+| ✅ | /api/item/update           | `update_item`            | ⚫︎ | Item        |
+| ✅ | /api/library/info          | `get_library_info`       | ⚫︎ | Library     |
+| ✅ | /api/library/history       | `get_library_history`    |  | Library     |
+| ✅ | /api/library/switch        | `switch_library`         |  | Library     |
+| ✅ | /api/library/icon          | `get_library_icon`       |  | Library     |
 
 MCP Server API docs: 
 - https://tuki0918.github.io/eagle-mcp-server/
