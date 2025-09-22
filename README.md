@@ -141,7 +141,7 @@ flowchart LR
 > [!TIP]
 > You have direct access to the filesystem.
 
-### 2) Same Host (Eagle App, MCP Server) + Other Host (MCP Client)
+### 2) Other Host (MCP Client) + Same Host (MCP Server, Eagle App)
 
 ```mermaid
 flowchart LR
