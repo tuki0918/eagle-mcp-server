@@ -56,7 +56,7 @@ uv run main.py
 
 ## Connecting to the MCP Server using Streamable HTTP
 
-Example config:
+Example config (Cursor editor recommended):
 
 ```
 {
