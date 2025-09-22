@@ -1,7 +1,3 @@
-"""
-Tools package for Eagle MCP Server.
-"""
-
 from .application import register_application_tools
 from .folder import register_folder_tools
 from .library import register_library_tools

@@ -1,9 +1,6 @@
-"""
-Item related tools for Eagle MCP Server.
-"""
-
 import os
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Annotated
+from pydantic import Field
 from fastmcp import FastMCP
 from utils.eagle_api import eagle_api_get, eagle_api_post
 
@@ -11,33 +8,46 @@ from utils.eagle_api import eagle_api_get, eagle_api_post
 def register_item_tools(mcp: FastMCP):
     """Register item-related tools to the MCP server."""
 
-    @mcp.tool
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/addFromURL"},
+    )
     async def add_item_from_url(
-        url: str,
-        name: str,
-        folder_id: Optional[str] = None,
-        website: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        star: Optional[int] = None,
-        annotation: Optional[str] = None,
-        modification_time: Optional[int] = None,
-        headers: Optional[Dict[str, str]] = None,
+        url: Annotated[
+            str,
+            Field(
+                description="The URL of the image to be added. Supports http, https, base64"
+            ),
+        ],
+        name: Annotated[str, Field(description="The name of the image to be added")],
+        folder_id: Annotated[
+            Optional[str], Field(description="The ID of the folder to put the image in")
+        ] = None,
+        website: Annotated[
+            Optional[str], Field(description="The address of the source of the image")
+        ] = None,
+        tags: Annotated[
+            Optional[List[str]], Field(description="Tags for the image")
+        ] = None,
+        star: Annotated[
+            Optional[int],
+            Field(description="The rating for the image (0-5)", ge=0, le=5),
+        ] = None,
+        annotation: Annotated[
+            Optional[str], Field(description="The annotation for the image")
+        ] = None,
+        modification_time: Annotated[
+            Optional[int], Field(description="The creation date (ms) of the image")
+        ] = None,
+        headers: Annotated[
+            Optional[Dict[str, str]],
+            Field(description="Customize the HTTP headers properties"),
+        ] = None,
     ):
         """
         Add an image from a URL to Eagle App.
 
         If you intend to add multiple items in a row, we suggest you use `add_items_from_urls`.
-
-        Args:
-            url: The URL of the image to be added. Supports http, https, base64
-            name: The name of the image to be added
-            folder_id: The ID of the folder to put the image in (optional)
-            website: The address of the source of the image (optional)
-            tags: Tags for the image (optional)
-            star: The rating for the image (0-5) (optional)
-            annotation: The annotation for the image (optional)
-            modification_time: The creation date (ms) of the image (optional)
-            headers: Customize the HTTP headers properties (optional)
 
         Returns:
             dict: Result of the add operation
@@ -59,29 +69,34 @@ def register_item_tools(mcp: FastMCP):
             payload["headers"] = headers
         return await eagle_api_post("/api/item/addFromURL", payload)
 
-    @mcp.tool
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/addFromPath"},
+    )
     async def add_item_from_path(
-        path: str,
-        name: str,
-        folder_id: Optional[str] = None,
-        website: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        star: Optional[int] = None,
-        annotation: Optional[str] = None,
+        path: Annotated[str, Field(description="The path of the local file")],
+        name: Annotated[str, Field(description="The name of the image to be added")],
+        folder_id: Annotated[
+            Optional[str], Field(description="The ID of the folder to put the image in")
+        ] = None,
+        website: Annotated[
+            Optional[str], Field(description="The address of the source of the image")
+        ] = None,
+        tags: Annotated[
+            Optional[List[str]], Field(description="Tags for the image")
+        ] = None,
+        star: Annotated[
+            Optional[int],
+            Field(description="The rating for the image (0-5)", ge=0, le=5),
+        ] = None,
+        annotation: Annotated[
+            Optional[str], Field(description="The annotation for the image")
+        ] = None,
     ):
         """
         Add a local file to Eagle App.
 
         If you intend to add multiple items in a row, we suggest you use `add_items_from_paths`.
-
-        Args:
-            path: The path of the local file
-            name: The name of the image to be added
-            folder_id: The ID of the folder to put the image in (optional)
-            website: The address of the source of the image (optional)
-            tags: Tags for the image (optional)
-            star: The rating for the image (0-5) (optional)
-            annotation: The annotation for the image (optional)
 
         Returns:
             dict: Result of the add operation
@@ -99,23 +114,27 @@ def register_item_tools(mcp: FastMCP):
             payload["annotation"] = annotation
         return await eagle_api_post("/api/item/addFromPath", payload)
 
-    @mcp.tool
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/addBookmark"},
+        enabled=False,
+    )
     async def add_bookmark(
-        url: str,
-        name: str,
-        folder_id: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        modification_time: Optional[int] = None,
+        url: Annotated[str, Field(description="The URL of the bookmark to be added")],
+        name: Annotated[str, Field(description="The name/title of the bookmark")],
+        folder_id: Annotated[
+            Optional[str],
+            Field(description="The ID of the folder to put the bookmark in"),
+        ] = None,
+        tags: Annotated[
+            Optional[List[str]], Field(description="Tags for the bookmark")
+        ] = None,
+        modification_time: Annotated[
+            Optional[int], Field(description="The creation date (ms) of the bookmark")
+        ] = None,
     ):
         """
         Save the link in the URL form to Eagle App.
-
-        Args:
-            url: The URL of the bookmark to be added
-            name: The name/title of the bookmark
-            folder_id: The ID of the folder to put the bookmark in (optional)
-            tags: Tags for the bookmark (optional)
-            modification_time: The creation date (ms) of the bookmark (optional)
 
         Returns:
             dict: Result of the bookmark add operation
@@ -129,15 +148,17 @@ def register_item_tools(mcp: FastMCP):
             payload["modificationTime"] = modification_time
         return await eagle_api_post("/api/item/addBookmark", payload)
 
-    @mcp.tool
-    async def get_item_info(item_id: str):
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/info"},
+    )
+    async def get_item_info(
+        item_id: Annotated[str, Field(description="ID of the file")],
+    ):
         """
         Get Properties of the specified file.
 
         Including the file name, tags, categorizations, folders, dimensions, etc.
-
-        Args:
-            item_id: ID of the file
 
         Returns:
             dict: Item information including metadata
@@ -145,16 +166,19 @@ def register_item_tools(mcp: FastMCP):
         payload = {"id": item_id}
         return await eagle_api_get("/api/item/info", payload)
 
-    @mcp.tool
-    async def get_item_thumbnail(item_id: str):
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/thumbnail"},
+        enabled=False,
+    )
+    async def get_item_thumbnail(
+        item_id: Annotated[str, Field(description="ID of the file")],
+    ):
         """
         Get the path of the thumbnail of the file specified.
 
         If you would like to get a batch of thumbnail paths,
         the combination of Library path + Object ID is recommended.
-
-        Args:
-            item_id: ID of the file
 
         Returns:
             dict: Thumbnail path information
@@ -162,27 +186,47 @@ def register_item_tools(mcp: FastMCP):
         payload = {"id": item_id}
         return await eagle_api_get("/api/item/thumbnail", payload)
 
-    @mcp.tool
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/list"},
+    )
     async def get_item_list(
-        limit: Optional[int] = 200,
-        offset: Optional[int] = 0,
-        order_by: Optional[str] = None,
-        keyword: Optional[str] = None,
-        ext: Optional[str] = None,
-        tags: Optional[str] = None,
-        folders: Optional[str] = None,
+        limit: Annotated[
+            Optional[int],
+            Field(
+                description="The number of items to be displayed (1-200)", ge=1, le=200
+            ),
+        ] = 200,
+        offset: Annotated[
+            Optional[int],
+            Field(description="Offset a collection of results from the api", ge=0),
+        ] = 0,
+        order_by: Annotated[
+            Optional[str],
+            Field(
+                description="The sorting order. CREATEDATE, FILESIZE, NAME, RESOLUTION, add minus for descending"
+            ),
+        ] = None,
+        keyword: Annotated[
+            Optional[str], Field(description="Filter by the keyword")
+        ] = None,
+        ext: Annotated[
+            Optional[str],
+            Field(description="Filter by the extension type, e.g.: jpg, png"),
+        ] = None,
+        tags: Annotated[
+            Optional[str],
+            Field(
+                description="Filter by tags. Use , to divide different tags. E.g.: Design, Poster"
+            ),
+        ] = None,
+        folders: Annotated[
+            Optional[str],
+            Field(description="Filter by Folders. Use , to divide folder IDs"),
+        ] = None,
     ):
         """
         Get items that match the filter condition.
-
-        Args:
-            limit: The number of items to be displayed (1-200, default: 200)
-            offset: Offset a collection of results from the api (default: 0)
-            order_by: The sorting order. CREATEDATE, FILESIZE, NAME, RESOLUTION, add minus for descending
-            keyword: Filter by the keyword
-            ext: Filter by the extension type, e.g.: jpg, png
-            tags: Filter by tags. Use , to divide different tags. E.g.: Design, Poster
-            folders: Filter by Folders. Use , to divide folder IDs
 
         Returns:
             dict: List of items matching the criteria
@@ -200,13 +244,17 @@ def register_item_tools(mcp: FastMCP):
             payload["folders"] = folders
         return await eagle_api_get("/api/item/list", payload)
 
-    @mcp.tool
-    async def move_item_to_trash(item_ids: List[str]):
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/moveToTrash"},
+    )
+    async def move_item_to_trash(
+        item_ids: Annotated[
+            List[str], Field(description="List of item IDs to move to trash")
+        ],
+    ):
         """
         Move items to trash.
-
-        Args:
-            item_ids: List of item IDs to move to trash
 
         Returns:
             dict: Result of the move operation
@@ -214,16 +262,19 @@ def register_item_tools(mcp: FastMCP):
         payload = {"itemIds": item_ids}
         return await eagle_api_post("/api/item/moveToTrash", payload)
 
-    @mcp.tool
-    async def refresh_item_palette(item_id: str):
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/refreshPalette"},
+        enabled=False,
+    )
+    async def refresh_item_palette(
+        item_id: Annotated[str, Field(description="The item's ID")],
+    ):
         """
         Re-analysis the color of the file.
 
         When changes to the original file were made, you can call this function
         to refresh the Color Analysis.
-
-        Args:
-            item_id: The item's ID
 
         Returns:
             dict: Result of the refresh operation
@@ -231,16 +282,19 @@ def register_item_tools(mcp: FastMCP):
         payload = {"id": item_id}
         return await eagle_api_post("/api/item/refreshPalette", payload)
 
-    @mcp.tool
-    async def refresh_item_thumbnail(item_id: str):
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/refreshThumbnail"},
+        enabled=False,
+    )
+    async def refresh_item_thumbnail(
+        item_id: Annotated[str, Field(description="The item's ID")],
+    ):
         """
         Re-generate the thumbnail of the file used to display in the List.
 
         When changes to the original file were made, you can call this function
         to re-generate the thumbnail, the color analysis will also be made.
-
-        Args:
-            item_id: The item's ID
 
         Returns:
             dict: Result of the refresh operation
@@ -248,23 +302,25 @@ def register_item_tools(mcp: FastMCP):
         payload = {"id": item_id}
         return await eagle_api_post("/api/item/refreshThumbnail", payload)
 
-    @mcp.tool
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/update"},
+    )
     async def update_item(
-        item_id: str,
-        tags: Optional[List[str]] = None,
-        annotation: Optional[str] = None,
-        url: Optional[str] = None,
-        star: Optional[int] = None,
+        item_id: Annotated[str, Field(description="The ID of the item to be modified")],
+        tags: Annotated[
+            Optional[List[str]], Field(description="Tags for the item")
+        ] = None,
+        annotation: Annotated[
+            Optional[str], Field(description="Annotations for the item")
+        ] = None,
+        url: Annotated[Optional[str], Field(description="The source url")] = None,
+        star: Annotated[
+            Optional[int], Field(description="Ratings (0-5)", ge=0, le=5)
+        ] = None,
     ):
         """
         Modify data of specified fields of the item.
-
-        Args:
-            item_id: The ID of the item to be modified
-            tags: Tags for the item (optional)
-            annotation: Annotations for the item (optional)
-            url: The source url (optional)
-            star: Ratings (0-5) (optional)
 
         Returns:
             dict: Result of the update operation
@@ -280,13 +336,15 @@ def register_item_tools(mcp: FastMCP):
             payload["star"] = star
         return await eagle_api_post("/api/item/update", payload)
 
-    @mcp.tool
-    async def get_item_source(item_id: str):
+    @mcp.tool(
+        tags={"Item"},
+        meta={"reference": "https://api.eagle.cool/item/source"},
+    )
+    async def get_item_source(
+        item_id: Annotated[str, Field(description="ID of the file")],
+    ):
         """
         Get the source path of the file specified.
-
-        Args:
-            item_id: ID of the file
 
         Returns:
             dict: Source path information or error

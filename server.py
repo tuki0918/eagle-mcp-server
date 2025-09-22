@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-"""
-Eagle MCP Server
-
-A Model Context Protocol (MCP) server for Eagle using FastMCP 2.0.
-Provides tools to interact with the Eagle application API.
-"""
-
 import asyncio
 from fastmcp import FastMCP
 from tools import (

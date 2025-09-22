@@ -1,7 +1,3 @@
-"""
-Application related tools for Eagle MCP Server.
-"""
-
 from fastmcp import FastMCP
 from utils.eagle_api import eagle_api_get
 
@@ -9,7 +5,10 @@ from utils.eagle_api import eagle_api_get
 def register_application_tools(mcp: FastMCP):
     """Register application-related tools to the MCP server."""
 
-    @mcp.tool
+    @mcp.tool(
+        tags={"Application"},
+        meta={"reference": "https://api.eagle.cool/application/info"},
+    )
     async def get_application_info():
         """
         Get detailed information on the Eagle App currently running.
