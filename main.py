@@ -26,7 +26,7 @@ mcp = FastApiMCP(
     exclude_tags=["Disabled"],
 )
 
-mcp.mount()
+mcp.mount_http()
 
 if __name__ == "__main__":
     import uvicorn
