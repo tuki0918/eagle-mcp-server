@@ -10,7 +10,7 @@ def register_item_tools(mcp: FastMCP):
 
     @mcp.tool(
         tags={"Item"},
-        meta={"reference": "https://api.eagle.cool/item/addFromURL"},
+        meta={"reference": "https://api.eagle.cool/item/add-from-url"},
     )
     async def add_item_from_url(
         url: Annotated[
