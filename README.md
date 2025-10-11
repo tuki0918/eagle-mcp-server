@@ -1,8 +1,11 @@
 # Eagle MCP Server (Unofficial)
 
+> [!NOTE]
+> [Official MCP support is planned for Eagle v5 (public beta in Q1 2026)](https://eagle.cool/blog/post/eagle5-teaser)
+
 ![](.github/docs/cover.png)
 
-A Model Context Protocol (MCP) server for Eagle. [Wiki](https://github.com/tuki0918/eagle-mcp-server/wiki)
+A Model Context Protocol (MCP) server for Eagle.
 
 <details>
 
@@ -49,90 +52,82 @@ uv sync
 
 ```bash
 uv run main.py
-# To use a different endpoint:
+# To use a different Eagle API endpoint:
 # EAGLE_API_BASE_URL=http://localhost:12345 uv run main.py
 ```
 
 
-## Connecting to the MCP Server
+## Connecting to the MCP Server using Stdio transport
 
-This server uses **stdio transport** (recommended for local usage). Configure your MCP client as follows:
+インストールなし版：
 
-### Claude Desktop
+```json
+{
+  "mcpServers": {
+    "eagle-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/tuki0918/eagle-mcp-server",
+        "python",
+        "-m",
+        "main"
+      ]
+    }
+  }
+}
+```
+
+ローカル版：
 
 ```json
 {
   "mcpServers": {
     "eagle-mcp-server": {
       "command": "uv",
-      "args": ["run", "main.py"],
-      "cwd": "/path/to/eagle-mcp-server"
+      "args": [
+        "run",
+        "--directory",
+        "</path/to/eagle-mcp-server>",
+        "-m",
+        "main"
+      ]
     }
   }
 }
 ```
 
-### VS Code
 
-```json
-{
-  "mcp": {
-    "servers": {
-      "eagle-mcp-server": {
-        "type": "stdio",
-        "command": "uv",
-        "args": ["run", "main.py"],
-        "cwd": "/path/to/eagle-mcp-server"
-      }
-    }
-  }
-}
-```
+| Supported | Eagle API endpoint | Operation ID | Enabled (default) | Tag |
+|:----:|:---------------------------|:-------------------------|:----:|:------------|
+| ✅ | /api/application/info      | `get_application_info`   | ⚫︎ | Application |
+| ✅ | /api/folder/create         | `create_folder`          | ⚫︎ | Folder      |
+| ✅ | /api/folder/rename         | `rename_folder`          |  | Folder      |
+| ✅ | /api/folder/update         | `update_folder`          | ⚫︎ | Folder      |
+| ✅ | /api/folder/list           | `get_folder_list`        | ⚫︎ | Folder      |
+| ✅ | /api/folder/listRecent     | `get_folder_list_recent` |  | Folder      |
+| ✅ | /api/item/addFromURL       | `add_item_from_url`      |  | Item        |
+| ✅ | /api/item/addFromURLs      | `add_items_from_urls`    |  | Item        |
+| ✅ | /api/item/addFromPath      | `add_item_from_path`     | ⚫︎ | Item        |
+| ✅ | /api/item/addFromPaths     | `add_items_from_paths`   |  | Item        |
+| ✅ | /api/item/addBookmark      | `add_bookmark`           |  | Item        |
+| ✅ | /api/item/info             | `get_item_info`          | ⚫︎ | Item        |
+| ✅ | -           | `get_item_source`        | ⚫︎ | Item        |
+| ✅ | /api/item/thumbnail        | `get_item_thumbnail`     |  | Item        |
+| ✅ | /api/item/list             | `get_item_list`          | ⚫︎ | Item        |
+| ✅ | /api/item/moveToTrash      | `move_item_to_trash`     | ⚫︎ | Item        |
+| ✅ | /api/item/refreshPalette   | `refresh_item_palette`   |  | Item        |
+| ✅ | /api/item/refreshThumbnail | `refresh_item_thumbnail` |  | Item        |
+| ✅ | /api/item/update           | `update_item`            | ⚫︎ | Item        |
+| ✅ | /api/library/info          | `get_library_info`       | ⚫︎ | Library     |
+| ✅ | /api/library/history       | `get_library_history`    |  | Library     |
+| ✅ | /api/library/switch        | `switch_library`         |  | Library     |
+| ✅ | /api/library/icon          | `get_library_icon`       |  | Library     |
 
-### Environment Variables
-
-- `EAGLE_API_BASE_URL` - Eagle API endpoint (default: `http://localhost:41595`)
-
-Example:
-```bash
-EAGLE_API_BASE_URL=http://localhost:12345 uv run main.py
-```
-
-## Tools
-
-| Supported | Operation ID             | API endpoint               | Available | Category    |
-|:----:|:-------------------------|:---------------------------|:----:|:------------|
-| ✅ | `get_application_info`   | /api/application/info      | ✅ | Application |
-| ✅ | `create_folder`          | /api/folder/create         | ✅ | Folder      |
-| ✅ | `rename_folder`          | /api/folder/rename         | ✅ | Folder      |
-| ✅ | `update_folder`          | /api/folder/update         | ✅ | Folder      |
-| ✅ | `get_folder_list`        | /api/folder/list           | ✅ | Folder      |
-| ✅ | `get_folder_list_recent` | /api/folder/listRecent     | ✅ | Folder      |
-| ✅ | `add_item_from_url`      | /api/item/addFromURL       | ✅ | Item        |
-| ✅ | `add_items_from_urls`    | /api/item/addFromURLs      | ✅ | Item        |
-| ✅ | `add_item_from_path`     | /api/item/addFromPath      | ✅ | Item        |
-| ✅ | `add_items_from_paths`   | /api/item/addFromPaths     | ✅ | Item        |
-| ✅ | `add_bookmark`           | /api/item/addBookmark      | ✅ | Item        |
-| ✅ | `get_item_info`          | /api/item/info             | ✅ | Item        |
-| ✅ | `get_item_source`        | /api/item/source           | ✅ | Item        |
-| ✅ | `get_item_thumbnail`     | /api/item/thumbnail        | ✅ | Item        |
-| ✅ | `get_item_list`          | /api/item/list             | ✅ | Item        |
-| ✅ | `move_item_to_trash`     | /api/item/moveToTrash      | ✅ | Item        |
-| ✅ | `refresh_item_palette`   | /api/item/refreshPalette   | ✅ | Item        |
-| ✅ | `refresh_item_thumbnail` | /api/item/refreshThumbnail | ✅ | Item        |
-| ✅ | `update_item`            | /api/item/update           | ✅ | Item        |
-| ✅ | `get_library_info`       | /api/library/info          | ✅ | Library     |
-| ✅ | `get_library_history`    | /api/library/history       | ✅ | Library     |
-| ✅ | `switch_library`         | /api/library/switch        | ✅ | Library     |
-| ✅ | `get_library_icon`       | /api/library/icon          | ✅ | Library     |
-
-**Total: 19 tools available**
-
-All tools are now available by default in the FastMCP implementation. Previously disabled endpoints have been enabled.
 
 ## Use Cases
 
-### 1) Same Host (Recommended)
+### Same Host
 
 ```mermaid
 flowchart LR
@@ -160,8 +155,4 @@ flowchart LR
 ```
 
 > [!TIP]
-> Using stdio transport - no network ports required. You have direct access to the filesystem.
-
-### 2) Remote Usage
-
-For remote usage, you would need to run the MCP server on the same machine as Eagle and configure your client to connect remotely. However, stdio transport requires local execution, so this setup is more complex and not recommended.
+> You have direct access to the filesystem.
