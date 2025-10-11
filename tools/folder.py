@@ -33,7 +33,7 @@ def register_folder_tools(mcp: FastMCP):
         return await eagle_api_post("/api/folder/create", payload)
 
     @mcp.tool(
-        tags={"Folder"},
+        tags={"Folder", "disabled"},
         meta={"reference": "https://api.eagle.cool/folder/rename"},
         enabled=False,
     )
@@ -108,7 +108,7 @@ def register_folder_tools(mcp: FastMCP):
         return await eagle_api_get("/api/folder/list")
 
     @mcp.tool(
-        tags={"Folder"},
+        tags={"Folder", "disabled"},
         meta={"reference": "https://api.eagle.cool/folder/list-recent"},
         enabled=False,
     )

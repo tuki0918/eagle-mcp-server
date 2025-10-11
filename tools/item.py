@@ -9,7 +9,7 @@ def register_item_tools(mcp: FastMCP):
     """Register item-related tools to the MCP server."""
 
     @mcp.tool(
-        tags={"Item"},
+        tags={"Item", "disabled"},
         meta={"reference": "https://api.eagle.cool/item/add-from-url"},
     )
     async def add_item_from_url(
@@ -115,7 +115,7 @@ def register_item_tools(mcp: FastMCP):
         return await eagle_api_post("/api/item/addFromPath", payload)
 
     @mcp.tool(
-        tags={"Item"},
+        tags={"Item", "disabled"},
         meta={"reference": "https://api.eagle.cool/item/addBookmark"},
         enabled=False,
     )
@@ -167,7 +167,7 @@ def register_item_tools(mcp: FastMCP):
         return await eagle_api_get("/api/item/info", payload)
 
     @mcp.tool(
-        tags={"Item"},
+        tags={"Item", "disabled"},
         meta={"reference": "https://api.eagle.cool/item/thumbnail"},
         enabled=False,
     )
@@ -263,7 +263,7 @@ def register_item_tools(mcp: FastMCP):
         return await eagle_api_post("/api/item/moveToTrash", payload)
 
     @mcp.tool(
-        tags={"Item"},
+        tags={"Item", "disabled"},
         meta={"reference": "https://api.eagle.cool/item/refreshPalette"},
         enabled=False,
     )
@@ -283,7 +283,7 @@ def register_item_tools(mcp: FastMCP):
         return await eagle_api_post("/api/item/refreshPalette", payload)
 
     @mcp.tool(
-        tags={"Item"},
+        tags={"Item", "disabled"},
         meta={"reference": "https://api.eagle.cool/item/refreshThumbnail"},
         enabled=False,
     )

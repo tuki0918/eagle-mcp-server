@@ -24,7 +24,7 @@ def register_library_tools(mcp: FastMCP):
         return await eagle_api_get("/api/library/info")
 
     @mcp.tool(
-        tags={"Library"},
+        tags={"Library", "disabled"},
         meta={"reference": "https://api.eagle.cool/library/history"},
         enabled=False,
     )
@@ -38,7 +38,7 @@ def register_library_tools(mcp: FastMCP):
         return await eagle_api_get("/api/library/history")
 
     @mcp.tool(
-        tags={"Library"},
+        tags={"Library", "disabled"},
         meta={"reference": "https://api.eagle.cool/library/switch"},
         enabled=False,
     )
@@ -58,7 +58,7 @@ def register_library_tools(mcp: FastMCP):
         return await eagle_api_post("/api/library/switch", payload)
 
     @mcp.tool(
-        tags={"Library"},
+        tags={"Library", "disabled"},
         meta={"reference": "https://api.eagle.cool/library/icon"},
         enabled=False,
     )

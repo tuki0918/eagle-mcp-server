@@ -8,7 +8,7 @@ from tools import (
 )
 
 # Create the FastMCP server
-mcp = FastMCP("Eagle MCP Server", instructions="An MCP server for Eagle")
+mcp = FastMCP("Eagle MCP Server", instructions="An MCP server for Eagle", exclude_tags={"disabled"})
 
 # Register all tools
 register_application_tools(mcp)
