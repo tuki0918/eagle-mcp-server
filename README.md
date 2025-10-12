@@ -57,9 +57,9 @@ uv run main.py
 
 ## Connecting to the MCP Server using Streamable HTTP
 
-Example config (Cursor editor recommended):
+MCP config:
 
-```
+```json
 {
   "mcpServers": {
     "eagle-mcp-server": {
@@ -68,6 +68,30 @@ Example config (Cursor editor recommended):
   }
 }
 ```
+
+<details>
+<summary>If you need stdio transport instead:</summary>
+
+```json
+{
+  "mcpServers": {
+    "eagle-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/tuki0918/eagle-mcp-server@fastmcp-stdio",
+        "python",
+        "-m",
+        "main"
+      ]
+    }
+  }
+}
+```
+
+See [#17](https://github.com/tuki0918/eagle-mcp-server/pull/17) for more details.
+
+</details>
 
 ## Tools
 
