@@ -23,12 +23,14 @@ def register_item_tools(mcp: FastMCP):
         folder_id: Annotated[
             Optional[str], Field(description="The ID of the folder to put the image in")
         ] = None,
+        # NOTE: APIのドキュメントによっては、項目名がurlの場合がある
         website: Annotated[
             Optional[str], Field(description="The address of the source of the image")
         ] = None,
         tags: Annotated[
             Optional[List[str]], Field(description="Tags for the image")
         ] = None,
+        # NOTE: APIのドキュメントによっては、記載されていない場合がある。実際には利用可能
         star: Annotated[
             Optional[int],
             Field(description="The rating for the image (0-5)", ge=0, le=5),
@@ -70,6 +72,43 @@ def register_item_tools(mcp: FastMCP):
         return await eagle_api_post("/api/item/addFromURL", payload)
 
     @mcp.tool(
+        tags={"Item", "disabled"},
+        meta={"reference": "https://api.eagle.cool/item/add-from-urls"},
+    )
+    async def add_items_from_urls(
+        items: Annotated[
+            List[Dict],
+            Field(
+                description="List of items to add from URLs. Each item should contain url, name, and optional fields like website, tags, star, annotation, modification_time, headers"
+            ),
+        ],
+        folder_id: Annotated[
+            Optional[str],
+            Field(description="The ID of the folder to put the images in"),
+        ] = None,
+    ):
+        """
+        Add multiple images from URLs to Eagle App.
+
+        Each item in the items list should be a dictionary with the following structure:
+        - url (required): The URL of the image
+        - name (required): The name of the image
+        - website (optional): The source website
+        - tags (optional): List of tags
+        - star (optional): Rating 0-5
+        - annotation (optional): Annotation text
+        - modification_time (optional): Creation date in ms
+        - headers (optional): Custom HTTP headers
+
+        Returns:
+            dict: Result of the batch add operation
+        """
+        payload = {"items": items}
+        if folder_id is not None:
+            payload["folderId"] = folder_id
+        return await eagle_api_post("/api/item/addFromURLs", payload)
+
+    @mcp.tool(
         tags={"Item"},
         meta={"reference": "https://api.eagle.cool/item/add-from-path"},
     )
@@ -79,12 +118,14 @@ def register_item_tools(mcp: FastMCP):
         folder_id: Annotated[
             Optional[str], Field(description="The ID of the folder to put the image in")
         ] = None,
+        # NOTE: APIのドキュメントによっては、項目名がurlの場合がある
         website: Annotated[
             Optional[str], Field(description="The address of the source of the image")
         ] = None,
         tags: Annotated[
             Optional[List[str]], Field(description="Tags for the image")
         ] = None,
+        # NOTE: APIのドキュメントによっては、記載されていない場合がある。実際には利用可能
         star: Annotated[
             Optional[int],
             Field(description="The rating for the image (0-5)", ge=0, le=5),
@@ -116,12 +157,56 @@ def register_item_tools(mcp: FastMCP):
 
     @mcp.tool(
         tags={"Item", "disabled"},
+        meta={"reference": "https://api.eagle.cool/item/add-from-paths"},
+    )
+    async def add_items_from_paths(
+        # NOTE: ドキュメントがおそらく間違っている。
+        items: Annotated[
+            List[Dict],
+            Field(
+                description="List of items to add from local paths. Each item should contain path, name, and optional fields like website, tags, star, annotation"
+            ),
+        ],
+        folder_id: Annotated[
+            Optional[str],
+            Field(description="The ID of the folder to put the images in"),
+        ] = None,
+    ):
+        """
+        Add multiple local files to Eagle App.
+
+        Each item in the items list should be a dictionary with the following structure:
+        - path (required): The local file path
+        - name (required): The name of the image
+        - website (optional): The source website
+        - tags (optional): List of tags
+        - star (optional): Rating 0-5
+        - annotation (optional): Annotation text
+
+        Returns:
+            dict: Result of the batch add operation
+        """
+        payload = {"items": items}
+        if folder_id is not None:
+            payload["folderId"] = folder_id
+        return await eagle_api_post("/api/item/addFromPaths", payload)
+
+    @mcp.tool(
+        tags={"Item", "disabled"},
         meta={"reference": "https://api.eagle.cool/item/add-bookmark"},
         enabled=False,
     )
     async def add_bookmark(
         url: Annotated[str, Field(description="The URL of the bookmark to be added")],
+        # NOTE: base64が指定されていない場合は、URL遷移先のページのタイトルが反映される
         name: Annotated[str, Field(description="The name/title of the bookmark")],
+        # NOTE: 未指定の場合はURL遷移先のページのスクリーンショットが反映される
+        base64: Annotated[
+            Optional[str],
+            Field(
+                description="The thumbnail of the bookmark. Must be in base64 format."
+            ),
+        ] = None,
         folder_id: Annotated[
             Optional[str],
             Field(description="The ID of the folder to put the bookmark in"),
@@ -140,6 +225,8 @@ def register_item_tools(mcp: FastMCP):
             dict: Result of the bookmark add operation
         """
         payload = {"url": url, "name": name}
+        if base64 is not None:
+            payload["base64"] = base64
         if folder_id is not None:
             payload["folderId"] = folder_id
         if tags is not None:
@@ -318,6 +405,9 @@ def register_item_tools(mcp: FastMCP):
         star: Annotated[
             Optional[int], Field(description="Ratings (0-5)", ge=0, le=5)
         ] = None,
+        # NOTE: APIのドキュメントに項目が無く、API経由での更新できない
+        # name: ...
+        # folders: ...
     ):
         """
         Modify data of specified fields of the item.
