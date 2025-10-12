@@ -71,7 +71,7 @@ def register_item_tools(mcp: FastMCP):
 
     @mcp.tool(
         tags={"Item"},
-        meta={"reference": "https://api.eagle.cool/item/addFromPath"},
+        meta={"reference": "https://api.eagle.cool/item/add-from-path"},
     )
     async def add_item_from_path(
         path: Annotated[str, Field(description="The path of the local file")],
@@ -116,7 +116,7 @@ def register_item_tools(mcp: FastMCP):
 
     @mcp.tool(
         tags={"Item", "disabled"},
-        meta={"reference": "https://api.eagle.cool/item/addBookmark"},
+        meta={"reference": "https://api.eagle.cool/item/add-bookmark"},
         enabled=False,
     )
     async def add_bookmark(
@@ -246,7 +246,7 @@ def register_item_tools(mcp: FastMCP):
 
     @mcp.tool(
         tags={"Item"},
-        meta={"reference": "https://api.eagle.cool/item/moveToTrash"},
+        meta={"reference": "https://api.eagle.cool/item/api-item-movetotrash"},
     )
     async def move_item_to_trash(
         item_ids: Annotated[
@@ -264,7 +264,7 @@ def register_item_tools(mcp: FastMCP):
 
     @mcp.tool(
         tags={"Item", "disabled"},
-        meta={"reference": "https://api.eagle.cool/item/refreshPalette"},
+        meta={"reference": "https://api.eagle.cool/item/refresh-palette"},
         enabled=False,
     )
     async def refresh_item_palette(
@@ -284,7 +284,7 @@ def register_item_tools(mcp: FastMCP):
 
     @mcp.tool(
         tags={"Item", "disabled"},
-        meta={"reference": "https://api.eagle.cool/item/refreshThumbnail"},
+        meta={"reference": "https://api.eagle.cool/item/refresh-thumbnail"},
         enabled=False,
     )
     async def refresh_item_thumbnail(
@@ -338,7 +338,6 @@ def register_item_tools(mcp: FastMCP):
 
     @mcp.tool(
         tags={"Item"},
-        meta={"reference": "https://api.eagle.cool/item/source"},
     )
     async def get_item_source(
         item_id: Annotated[str, Field(description="ID of the file")],
