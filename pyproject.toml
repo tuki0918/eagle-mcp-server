@@ -16,8 +16,6 @@ eagle-mcp-server = "main:run"
 include = [
     "main.py",
     "server.py",
-    "routes/",
-    "schemas/", 
     "tools/",
     "utils/"
 ]
