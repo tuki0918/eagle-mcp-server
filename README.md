@@ -78,11 +78,8 @@ MCP config:
     "eagle-mcp-server": {
       "command": "uvx",
       "args": [
-        "--from",
-        "git+https://github.com/tuki0918/eagle-mcp-server@fastmcp-stdio",
-        "python",
-        "-m",
-        "main"
+        "--from", "git+https://github.com/tuki0918/eagle-mcp-server@fastmcp-stdio",
+        "eagle-mcp-server"
       ]
     }
   }
