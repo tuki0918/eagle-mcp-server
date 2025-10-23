@@ -10,7 +10,7 @@ dependencies = [
 ]
 
 [project.scripts]
-eagle-mcp-server = "main:main"
+eagle-mcp-server = "main:run"
 
 [tool.hatch.build.targets.wheel]
 include = [
