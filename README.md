@@ -29,7 +29,7 @@ A Model Context Protocol (MCP) server for [Eagle](https://eagle.sjv.io/RGANON).
 
 </details>
 
-- Eagle: https://eagle.cool/<br />
+- Eagle: [https://eagle.cool/](https://eagle.sjv.io/RGANON)<br />
 - Eagle API docs: https://api.eagle.cool/<br />
 
 ## Requirements
