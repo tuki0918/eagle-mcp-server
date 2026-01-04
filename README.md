@@ -5,7 +5,7 @@
 
 ![](.github/docs/cover.png)
 
-A Model Context Protocol (MCP) server for Eagle.
+A Model Context Protocol (MCP) server for [Eagle](https://eagle.sjv.io/RGANON).
 
 <details>
 
